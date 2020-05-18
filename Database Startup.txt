@@ -1,0 +1,17 @@
+create database DreamLogisticsReport;
+
+create table Query 
+(Id int primary key identity(1,1) not null, 
+Sql  varchar(max), 
+Name varchar(100))
+
+create table QueryParam 
+(Id int primary key identity(1,1) not null, 
+QueryId int not null foreign key references Query(Id), 
+Name varchar(50), 
+TypeId int not null, 
+ParameterCode varchar(25),
+TableName varchar(25),
+ColumnName varchar(25),
+KeyColumn varchar(25),
+ParamOptional bit)

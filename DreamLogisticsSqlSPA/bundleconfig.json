@@ -1,0 +1,12 @@
+[
+  {
+    "outputFileName": "wwwroot/js/app.js",
+    "inputFiles": [
+      "wwwroot/app/app.module.js",
+      "wwwroot/app/controllers/*.js"
+
+    ],
+    "minify": { "enabled": true }
+  }
+]
+

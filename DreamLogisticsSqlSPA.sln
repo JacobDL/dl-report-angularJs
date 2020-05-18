@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamLogisticsSqlSPA", "DreamLogisticsSqlSPA\DreamLogisticsSqlSPA.csproj", "{35F821C9-6416-419A-B705-6D1461752575}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{18EB5622-6CC2-4A1B-8D61-5BCCF398A43B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35F821C9-6416-419A-B705-6D1461752575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F821C9-6416-419A-B705-6D1461752575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F821C9-6416-419A-B705-6D1461752575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F821C9-6416-419A-B705-6D1461752575}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18EB5622-6CC2-4A1B-8D61-5BCCF398A43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18EB5622-6CC2-4A1B-8D61-5BCCF398A43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18EB5622-6CC2-4A1B-8D61-5BCCF398A43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18EB5622-6CC2-4A1B-8D61-5BCCF398A43B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7649C9E-BA13-46C4-9C1F-78C46CD75324}
+	EndGlobalSection
+EndGlobal

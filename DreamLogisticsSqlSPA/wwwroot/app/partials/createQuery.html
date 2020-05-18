@@ -1,0 +1,141 @@
+﻿<link rel="stylesheet" href="/css/create.css" />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched{border:1px solid red;}
+</style>
+
+<div ng-show="queryCreated == false">
+    <form name="createForm">
+        <h1>Skapa Rapportmall</h1>
+        <div>
+            <a href="/#!/"><p> Tillbaka till listan </p></a>
+        </div>
+
+        <hr />
+
+        <label> Gruppnamn </label>
+        <input name="groupName" ng-model="formData.groupName" style="width: 700px" class="form-control" ng-required="true" />
+        <span ng-show="createForm.groupName.$touched && createForm.groupName.$error.required">Gruppnamn är obligatoriskt</span>
+        <br />
+        <br />
+
+        <label> Sql-Query </label>
+        <textarea name="sql" style="height:100px" ng-model="formData.sql" class="form-control" ng-required="true"></textarea>
+        <span ng-show="createForm.sql.$touched && createForm.sql.$error.required">Sql-Queryn är obligatorisk</span>
+
+        <br />
+        <hr />
+        <br />
+        <div ng-repeat="row in formData.rows">
+            <div class="query-params flex-container">
+                <div class="form-group">
+                    <label>Namn</label>
+                    <input name="nameInput{{$index}}" ng-model="row.name" id="name-input" class="form-control" ng-required="true"/>
+                    <span ng-show="createForm.nameInput{{$index}}.$touched && createForm.nameInput{{$index}}.$error.required">Fyll i Namn</span>
+                </div>
+                <div class="form-group">
+                    <label>Kod</label>
+                    <input name="codeInput{{$index}}" ng-model="row.parameterCode" class="form-control" ng-required="true"/>
+                    <span ng-show="createForm.codeInput{{$index}}.$touched && createForm.codeInput{{$index}}.$error.required">Fyll i Kod</span>
+                </div>
+                <div class="form-group">
+                    <label>Typ</label>
+                    <select ng-init="row.typeId = '1'" ng-change="addOptions({{$index}})" ng-model="row.typeId" class="form-control">
+                        <option value="1">
+                            Text
+                        </option>
+                        <option value="2">
+                            Datum
+                        </option>
+                        <option value="3">
+                            Boolean
+                        </option>
+                        <option value="4">
+                            Sql-Tabell
+                        </option>
+                        <option value="5">
+                            Siffra
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tabellnamn</label>
+                    <input name="tableInput{{$index}}" ng-disabled="row.typeId != 4" ng-model="row.tableName" class="form-control" ng-required="row.typeId == 4" />
+                    <span ng-show="createForm.tableInput{{$index}}.$touched && createForm.tableInput{{$index}}.$error.required">Fyll i Tabellnamn</span>
+                </div>
+                <div class="form-group">
+                    <label>Visningskolumn</label>
+                    <input name="displayInput{{$index}}" ng-disabled="row.typeId != 4" ng-model="row.displayColumn" class="form-control" ng-required="row.typeId == 4" />
+                    <span ng-show="createForm.displayInput{{$index}}.$touched && createForm.displayInput{{$index}}.$error.required">Fyll i Visningskolumn</span>
+                </div>
+                <div class="form-group">
+                    <label>Nyckelkolumn</label>
+                    <input name="keyInput{{$index}}" ng-disabled="row.typeId != 4" ng-model="row.keyColumn" class="form-control" ng-required="row.typeId == 4" />
+                    <span ng-show="createForm.keyInput{{$index}}.$touched && createForm.keyInput{{$index}}.$error.required">Fyll i Nyckelkolumn</span>
+                </div>
+                <button type="button" name="remove" class="btn btn-danger btn-sm btn-style" ng-click="removeRow($index)"><span class="glyphicon glyphicon-minus"></span></button>
+            </div>
+            <div style="width:11em" class="flex-container">
+                <div style="width:2em">
+                    <input ng-model="row.paramOptional" style="width:2vh" type="checkbox" class="form-control" />
+                </div>
+                <div>
+                    <label style="line-height:3em">Valfri parameter</label>
+                </div>
+            </div>
+            <hr />
+            <br />
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="button" value="+Lägg till Parameter" class="btn btn-primary" ng-click="addRow()" />
+        </div>
+
+        <div class="form-group">
+            <input ng-disabled="createForm.$invalid" ng-click="createQuery()" type="submit" value="Spara" class="btn btn-success" />
+        </div>
+        <br />
+        <div>
+            <a href="/#!/"><p> Tillbaka till listan </p></a>
+        </div>
+    </form>
+</div>
+
+<div ng-show="queryCreated == true">
+    <br />
+    <h1 style="color:#5cb85c">Rapportmall Skapad!</h1>
+    <br />
+    <hr />
+    <br />
+    <h2><b style="color:#5cb85c">Namn:</b> {{formData.groupName}}</h2>
+    <h3><b style="color:#5cb85c">Query:</b> {{formData.sql}}</h3>
+    <br />
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Typ</th>
+                <th>Kod</th>
+                <th>Tabellnamn</th>
+                <th>Visningskolumn</th>
+                <th>Nyckelkolumn</th>
+                <th>Valfri Parameter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in formData.rows">
+                <td>{{row.name}}</td>
+                <td>{{row.typeId}}</td>
+                <td>{{row.parameterCode}}</td>
+                <td>{{row.tableName}}</td>
+                <td>{{row.displayColumn}}</td>
+                <td>{{row.keyColumn}}</td>
+                <td>{{row.paramOptional}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="/#!/">Tillbaka</a>
+</div>
