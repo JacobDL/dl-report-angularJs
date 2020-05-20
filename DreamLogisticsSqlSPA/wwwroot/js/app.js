@@ -6,6 +6,10 @@ var myApp = angular.module("myApp", [
 myApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
         .when('/', {
+            templateUrl: '/app/partials/login.html',
+            controller: 'LoginController'
+        })
+        .when('/queryList', {
             templateUrl: '/app/partials/queryList.html',
             controller: 'QueryListController'
         })
@@ -17,34 +21,33 @@ myApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: '/app/partials/result.html',
             controller: 'ResultController'
         })
-        
+
 }]);
 var isAdmin = true;
 
 if (isAdmin) {
 
+    myApp.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
 
-myApp.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        
-        .when('/create', {
-            templateUrl: '/app/partials/createQuery.html',
-            controller: 'CreateController'
-        })
-        
-        .when('/delete/:queryId', {
-            templateUrl: '/app/partials/deleteQuery.html',
-            controller: 'DeleteController'
-        })
-        .when('/edit/:queryId', {
-            templateUrl: '/app/partials/editQuery.html',
-            controller: 'EditController'
-        })
-        .when('/details/:queryId', {
-            templateUrl: '/app/partials/queryDetails.html',
-            controller: 'DetailsController'
-        })
-}]);
+            .when('/create', {
+                templateUrl: '/app/partials/createQuery.html',
+                controller: 'CreateController'
+            })
+
+            .when('/delete/:queryId', {
+                templateUrl: '/app/partials/deleteQuery.html',
+                controller: 'DeleteController'
+            })
+            .when('/edit/:queryId', {
+                templateUrl: '/app/partials/editQuery.html',
+                controller: 'EditController'
+            })
+            .when('/details/:queryId', {
+                templateUrl: '/app/partials/queryDetails.html',
+                controller: 'DetailsController'
+            })
+    }]);
 }
 var myControllers = angular.module('myControllers', []);
 var isAdmin = true;
@@ -226,6 +229,34 @@ myControllers.controller('EditController', ['$scope', '$http', '$routeParams',
         }
 
     }]);
+myControllers.controller('LoginController', ['$scope', '$http', '$window',
+    function LoginController($scope, $http, $window) {
+
+        $scope.login = {
+            username: '',
+            password: ''
+        };
+
+        $scope.loginAttempt = function () {
+
+            $http.post("https://localhost:44313/api/Login/",
+                $scope.login
+            ).then(function (response) {
+                $scope.userResult = response.data;
+                if ($scope.userResult.username != null) {
+                    //$rootscope.loggedInuser = true;
+                    $window.location.href = '/#!/queryList';
+                }
+                else {
+                    $scope.invalidUser = 'Felaktiga Inloggninsuppgifter';
+                }
+            }, function (error) {
+                console.log("error");
+                console.log(error);
+            });
+        };
+
+    }]);
 myControllers.controller('DetailsController', ['$scope', '$http', '$routeParams',
     function DetailsController($scope, $http, $routeParams) {
 
@@ -244,13 +275,25 @@ myControllers.controller('QueryListController', ['$scope', '$http',
         $http.get("https://localhost:44313/api/query")
             .then(function (response) {
                 $scope.queries = response.data;
-
+                console.log($scope.queries)
                 if ($scope.queries == 0) {
                     $scope.noQueriesMessage = 'Det finns inga rapportmallar att välja på';
                 }
             });
 
         $scope.details = function (id) {
+
+            //const closeDetails = document.getElementsByClassName("details-drop-down-section");
+            //const closeDeletes = document.getElementsByClassName("delete-drop-down-section");
+
+            //for (var deletes of closeDeletes) {
+            //    deletes.style.display = "none";
+            //}
+
+            //for (var details of closeDetails) {
+            //    details.style.display = "none";
+            //}
+
             $http.get("https://localhost:44313/api/query/NoList/" + id) 
                 .then(function (response) {
 

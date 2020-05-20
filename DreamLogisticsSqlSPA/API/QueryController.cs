@@ -56,7 +56,7 @@ namespace DreamLogisticsSqlSPA.API
         [HttpPost("Create")]
         public IActionResult CreateQuery([FromBody] CreateViewModel formData)
         {
-            if (!IsAdmin)
+            if (IsAdmin)
             {
 
                 Query query = new Query(formData.Sql, formData.GroupName);

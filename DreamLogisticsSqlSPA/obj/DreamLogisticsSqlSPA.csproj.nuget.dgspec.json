@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {}
+    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {
+    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
+        "projectUniqueName": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
         "projectName": "DreamLogisticsSqlSPA",
-        "projectPath": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
-        "packagesPath": "C:\\Users\\melfas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\DreamLogisticsSqlSPA\\obj\\",
+        "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\melfas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\Repository.csproj"
+              "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj"
               }
             }
           }
@@ -52,6 +52,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.2, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.5.1, )"
             }
           },
           "imports": [
@@ -76,20 +80,20 @@
         }
       }
     },
-    "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\Repository.csproj": {
+    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\melfas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\melfas\\Desktop\\dreamlogistics-angularjs-master\\Repository\\obj\\",
+        "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\melfas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -4,7 +4,7 @@
 <div ng-show="queryEdited == false">
     <h1>Redigera Rapportmall</h1>
     <div>
-        <a href="/#!/"><p> Tillbaka till listan </p></a>
+        <a href="/#!/queryList"><p> Tillbaka till listan </p></a>
     </div>
 
     <hr />
@@ -64,7 +64,7 @@
             </div>
             <button type="button" name="remove" class="btn btn-danger btn-sm btn-style" ng-click="removeRow($index)"><span class="glyphicon glyphicon-minus"></span></button>
         </div>
-        <div style="width:11em" class="flex-container">
+        <div style="width:10em" class="flex-container">
             <div style="width:2em">
                 <input ng-model="i.paramOptional" style="width:2vh" type="checkbox" class="form-control" />
             </div>
@@ -85,7 +85,7 @@
     </div>
     <br />
     <div>
-        <a href="/#!/"><p> Tillbaka till listan </p></a>
+        <a href="/#!/queryList"><p> Tillbaka till listan </p></a>
     </div>
 </div>
 
@@ -123,5 +123,5 @@
             </tr>
         </tbody>
     </table>
-    <a class="btn btn-success" href="/#!/">Tillbaka</a>
+    <a class="btn btn-success" href="/#!/queryList">Tillbaka</a>
 </div>

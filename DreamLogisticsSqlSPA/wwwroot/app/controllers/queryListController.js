@@ -5,13 +5,25 @@
         $http.get("https://localhost:44313/api/query")
             .then(function (response) {
                 $scope.queries = response.data;
-
+                console.log($scope.queries)
                 if ($scope.queries == 0) {
                     $scope.noQueriesMessage = 'Det finns inga rapportmallar att välja på';
                 }
             });
 
         $scope.details = function (id) {
+
+            //const closeDetails = document.getElementsByClassName("details-drop-down-section");
+            //const closeDeletes = document.getElementsByClassName("delete-drop-down-section");
+
+            //for (var deletes of closeDeletes) {
+            //    deletes.style.display = "none";
+            //}
+
+            //for (var details of closeDetails) {
+            //    details.style.display = "none";
+            //}
+
             $http.get("https://localhost:44313/api/query/NoList/" + id) 
                 .then(function (response) {
 

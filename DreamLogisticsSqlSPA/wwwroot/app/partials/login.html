@@ -1,0 +1,19 @@
+﻿<link rel="stylesheet" href="/css/login.css" />
+<div>
+    <div class="box">
+        
+        <h2>Login</h2>
+        <form>
+            <div class="inputBox">
+                <input type="text" name="" ng-model="login.username" required="">
+                <label>Användarnamn</label>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="" ng-model="login.password" required="">
+                <label>Lösenord</label>
+            </div>
+            <input ng-click="loginAttempt()" type="submit" name="" value="Logga in">
+            <p style="color:red; margin-top:1rem">{{invalidUser}}</p>
+        </form>
+    </div>
+</div>
