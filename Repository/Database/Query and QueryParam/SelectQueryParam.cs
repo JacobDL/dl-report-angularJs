@@ -11,6 +11,12 @@ namespace Repository.Database.Query_and_QueryParam
     {
         private string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
 
+        /// <summary>
+        /// Gets all the QueryParams with the chosen queryId and also the requested sql-lists from the database
+        /// </summary>
+        /// <param name="id">QueryId chosen by the user</param>
+        /// <param name="needSqlList">a bool that determines whether or not to get the sql-lists</param>
+        /// <returns>a list of QueryParams</returns>
         internal List<QueryParam> GetQueryParamsById(int id, bool needSqlList)
         {
             List<QueryParam> queryParams = new List<QueryParam>();
@@ -51,6 +57,10 @@ namespace Repository.Database.Query_and_QueryParam
             return queryParams;
         }
 
+        /// <summary>
+        /// Gets all the column values of all the QueryParams from the database, Only used for the detail-view so far
+        /// </summary>
+        /// <returns>A list of all the QueryParams</returns>
         internal List<QueryParam> GetAllQueryParams()
         {
             List<QueryParam> queryParams = new List<QueryParam>();

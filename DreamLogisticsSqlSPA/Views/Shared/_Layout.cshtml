@@ -6,42 +6,66 @@
     <title>@ViewData["Title"] - Dream Logistics</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/755dc4852b.js" crossorigin="anonymous"></script>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.7.9/angular-route.min.js"></script>
+    <style>
+        #log-out {
+            font-size: 3em;
+            color: #366b48;
+        }
 
+            #log-out:hover {
+                color: #5ba045;
+                cursor: pointer;
+            }
+
+        .logged-in-user {
+            margin-right: 2em;
+            width: 50%;
+            justify-content: right;
+            text-align: right;
+        }
+
+        .user-logo {
+            font-size: 23px;
+            margin-right: 1rem;
+        }
+    </style>
 </head>
-<body style="margin-bottom:75px" ng-app="myApp" ng-strict-di>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<body style="margin-bottom:75px; background-color:#7b6e6e21" ng-app="myApp" ng-strict-di>
+    <header id="header-dream">
+        <nav ng-controller="LayOutController" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a href="/#!/queryList">
-                    <img style="height:5em" src="~/img/dreamlogistics.jpg" />
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                      
-                    </ul>
+                <div style="width:75%">
+                    <a style="cursor:pointer" ng-click="homeBtn()">
+                        <img style="height:5em" src="~/img/dreamlogistics.jpg" />
+                    </a>
                 </div>
+                <div class="logged-in-user">
+                    <h4 ng-show="user.name.length > 0 && user.roleId == 2"><i class="fas fa-user user-logo"></i> {{user.name}} (användare)</h4>
+                    <h4 ng-show="user.name.length > 0 && user.roleId == 1"><i class="fas fa-user-tie user-logo"></i> {{user.name}} (admin)</h4>
+                </div>
+                
+                <i id="log-out" ng-click="logOut()" class="fas fa-sign-out-alt"></i>
             </div>
+
         </nav>
+
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main style="margin-top:7em" role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Dream Logistics - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Dream Logistics
         </div>
     </footer>
     <script src="~/js/app.min.js"></script>

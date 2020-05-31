@@ -10,6 +10,10 @@ namespace Repository.Database.Query_and_QueryParam
     {
         private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
 
+        /// <summary>
+        /// First Deletes all the QueryParams connected to the chosen Query and then deletes to query (IT-role needed)
+        /// </summary>
+        /// <param name="id">the chosen QueryId</param>
         internal void DeleteQuery(int id)
         {
             string queryString = "DELETE FROM QueryParam WHERE QueryId=@id; DELETE FROM Query WHERE Id=@id";
@@ -27,6 +31,10 @@ namespace Repository.Database.Query_and_QueryParam
             }
         }
 
+        /// <summary>
+        /// Deletes a single QueryParam (IT-role needed)
+        /// </summary>
+        /// <param name="id">The chosen QueryParamId</param>
         internal void DeleteQueryParam(int id)
         {
             string queryString = "DELETE FROM QueryParam WHERE Id=@id";

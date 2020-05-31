@@ -9,6 +9,11 @@ namespace Repository.Database.Query_and_QueryParam
     class SelectQuery
     {
         private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
+
+        /// <summary>
+        /// Gets all the Queries from the database (used in the queryList.html)
+        /// </summary>
+        /// <returns>A list of Queries</returns>
         internal List<Query> GetQueries()
         {
             string queryString = $"SELECT * FROM Query";
@@ -40,6 +45,11 @@ namespace Repository.Database.Query_and_QueryParam
             return queries;
         }
 
+        /// <summary>
+        /// Gets one Query by its Id
+        /// </summary>
+        /// <param name="id">the Id chosen by the user</param>
+        /// <returns>All the columns value of the Query</returns>
         internal Query GetQueryById(int id)
         {
             string queryString = $"select * from Query where Id=@id";
@@ -63,10 +73,7 @@ namespace Repository.Database.Query_and_QueryParam
                     }
 
                 }
-
-
             }
-
             return query;
         }
     }

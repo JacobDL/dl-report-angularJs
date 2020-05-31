@@ -3,15 +3,19 @@
     'myControllers'
 ]);
 
-myApp.config(['$routeProvider', function ($routeProvider) {
+myApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+
+    $locationProvider.hashPrefix('');
+
     $routeProvider
-        .when('/', {
+        .when('/login', {
             templateUrl: '/app/partials/login.html',
             controller: 'LoginController'
         })
         .when('/queryList', {
             templateUrl: '/app/partials/queryList.html',
             controller: 'QueryListController'
+
         })
         .when('/search/:queryId', {
             templateUrl: '/app/partials/search.html',
@@ -21,31 +25,44 @@ myApp.config(['$routeProvider', function ($routeProvider) {
             templateUrl: '/app/partials/result.html',
             controller: 'ResultController'
         })
+        .when('/create', {
+            templateUrl: '/app/partials/createAndEditQuery.html',
+            controller: 'CreateEditController',
+        })
+        .when('/edit/:queryId', {
+            templateUrl: '/app/partials/createAndEditQuery.html',
+            controller: 'CreateEditController'
+        })
+        .otherwise({ redirectTo: '/queryList' })
 
-}]);
-var isAdmin = true;
+    $httpProvider.interceptors.push('BearerAuthInterceptor');
 
-if (isAdmin) {
+}])    //Checks if there is a token and redirects accordingly. Sets userName and roleId to the $rootScope.user varible
+    .run(['$rootScope', '$location', '$window', 'utilitiesService', function ($rootScope, $location, $window, utilitiesService) {
 
-    myApp.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-
-            .when('/create', {
-                templateUrl: '/app/partials/createQuery.html',
-                controller: 'CreateController'
-            })
-
-            .when('/delete/:queryId', {
-                templateUrl: '/app/partials/deleteQuery.html',
-                controller: 'DeleteController'
-            })
-            .when('/edit/:queryId', {
-                templateUrl: '/app/partials/editQuery.html',
-                controller: 'EditController'
-            })
-            .when('/details/:queryId', {
-                templateUrl: '/app/partials/queryDetails.html',
-                controller: 'DetailsController'
-            })
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            
+            var token = $window.localStorage.getItem('token')
+            console.log(token);
+            if (token === null || typeof token === 'undefined' || token === '') {
+                if (location.hash.indexOf('login') === -1) {
+                    $window.location.href = '/#/login';
+                }
+            }
+            else {
+                var user = utilitiesService.getUserInfo(token)
+                $window.localStorage.setItem('name', user.unique_name);
+                $window.localStorage.setItem('roleId', user.role);
+                $rootScope.user = {
+                    roleId: $window.localStorage.getItem('roleId'),
+                    name: $window.localStorage.getItem('name')
+                };
+                $window.location.href = '#/queryList';
+            }
+            
+        });
+        
     }]);
-}
+
+
+

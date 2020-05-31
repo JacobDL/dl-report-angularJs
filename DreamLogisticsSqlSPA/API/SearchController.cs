@@ -27,10 +27,10 @@ namespace DreamLogisticsSqlSPA.API
         [HttpPost]
         public IActionResult SearchQuery([FromBody] SearchParameters parameters)
         {
-            QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryResult(parameters);
+            QueryAndQueryParamsViewModel svm = SearchControllerLogic.GetQueryResult(parameters);
 
             DataTable sqlResults = QueryRequestRepository.GetSqlRequestToPage(svm);
-            SqlResultViewModel resultViewModel = QueryControllerLogic.GetResultViewModel(sqlResults);
+            SqlResultViewModel resultViewModel = SearchControllerLogic.GetResultViewModel(sqlResults);
 
             return Ok(resultViewModel);
         }
@@ -40,12 +40,10 @@ namespace DreamLogisticsSqlSPA.API
         [HttpPost("Excel")]
         public IActionResult SearchQueryExcel([FromBody] SearchParameters parameters)
         {
-            QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryResult(parameters);
+            QueryAndQueryParamsViewModel svm = SearchControllerLogic.GetQueryResult(parameters);
             MemoryStream ms = QueryRequestRepository.GetSqlRequestToExcelFile(svm);
 
             return new FileStreamResult(ms, new MediaTypeHeaderValue("application/octet-stream"));
-            
-
         }
     }
 }

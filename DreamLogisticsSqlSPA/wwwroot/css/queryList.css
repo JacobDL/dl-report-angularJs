@@ -1,9 +1,64 @@
-﻿#table-border td {
+﻿.options-btn {
+    font-size: 18px;
+    margin-left: 3em;
+}
+.query-btns {
+    width: 50em;
+    color: black;
+    background-color: #1466365c;
+    border-color: #146636;
+}
+
+.query-btns:hover {
+    background-color: #5ba045;
+}
+
+.colaps-deatails-section {
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    left: 22rem;
+    top: -2rem;
+}
+
+    .colaps-deatails-section:hover {
+        color: #146636;
+    }
+
+.sql-scroll-section {
+    width: 57em;
+    height: 8em;
+    overflow-y: scroll;
+    border: solid 1px #146636;
+    background-color: white;
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+
+@media (max-width:1200px) {
+    .options-btn {
+        margin-left: 1em;
+    }
+    .sql-scroll-section{
+        width:52em;
+    }
+    .colaps-deatails-section{
+        left:11rem;
+    }
+}
+
+
+
+#table-border td {
     border-top: 1px solid #146636;
 }
+
 #table-border tbody {
     border-top: 1px solid #146636;
 }
+
 tbody tr {
     height: 2em;
 }
@@ -13,82 +68,55 @@ tbody tr {
         line-height: 2em;
         color: black;
     }
-       
 
-.options-btn {
-    font-size: 18px;
-    margin-left: 3em;
-}
 
-.query-btns{
-    width: 48em;
-    color: black;
-    background-color: #1466365c;
-    border-color: #146636;
-}
-.query-btns-td td {
-    padding: .75rem .75rem .75rem 0;
-}
 
-.query-btns-user{
+
+.query-btns-user {
     width: 100%;
     color: black;
     background-color: #1466365c;
     border-color: #146636;
-}
-.query-btns-user-td td{
-    padding: .75rem;
+    
 }
 
-.sql-scroll-section {
-    width: 50em;
-    height: 8em;
-    overflow: scroll;
-    border: solid 1px #146636;
-    background-color: white;
-    padding-top: 5px;
-    padding-left: 10px;
+#query-btns-user-td {
+    padding: .75rem 0 .75rem 0;
 }
+
+
 
 .delete-drop-down-section {
     background-color: #eaeaea;
     display: none;
     border: solid 2px #146636;
 }
+
 .details-drop-down-section {
     border: solid 2px #146636;
     background-color: #eaeaea;
     display: none;
 }
 
-.colaps-deatails-section {
-    cursor: pointer;
-    font-size: 40px;
-    font-weight: bold;
-    position:absolute;
-    left:15rem;
-    top:-2rem;
-}
-    .colaps-deatails-section:hover {
-        color: #146636;
-    }
 
-    .options-btns {
-        text-align: right;
-        width:25%;
-    }
+.options-btns {
+    text-align: right;
+    width: 25%;
+}
 
 .flex-container-query-list {
     display: flex;
     flex-direction: row;
 }
+
 .search-container {
     width: 18em;
     display: block;
     margin: 0 auto;
 }
+
 #search-container {
-    margin-top: 1em;
+    margin-top: 2em;
     margin-bottom: 1em;
 }
 
@@ -100,6 +128,7 @@ input#search-bar {
     font-size: 18px;
     border: 2px solid #146636;
     outline: none;
+    border-radius: 10px;
 }
 
 .search-icon {
@@ -116,34 +145,38 @@ input#search-bar {
     color: #146636;
     cursor: pointer;
 }
-/*.drop-down-btns {
-    color: #337ab7;
-}*/
 
 
 #create-new-query {
-    color: #5ba045;
+    color: #146636;
     font-size: 20px;
+    font-family: Helvetica Neue;
 }
+
     #create-new-query:hover {
-        color: #146636;
+        color: #5ba045;
         border-bottom: solid 1px;
     }
 
 
-.delete-message{
-    line-height:2em;
-    font-size:18px;
+.delete-message {
+    line-height: 2em;
+    font-size: 18px;
 }
+
 .delete-btns {
     text-align: right;
 }
-#delete-message-top{
-    color:red;
-    font-size:20px;
-    font-style:italic;
-    margin-top:30px;
-    margin-left:5px;
+
+#delete-message-top {
+    color: red;
+    font-size: 20px;
+    font-style: italic;
+    margin-top: 30px;
+    margin-left: 5px;
     display: none;
 }
 
+#query-btn-padding {
+    padding: .75rem .75rem .75rem 0;
+}

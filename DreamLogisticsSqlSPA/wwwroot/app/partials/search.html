@@ -1,16 +1,21 @@
 ﻿<link rel="stylesheet" href="/css/search.css" />
-<style>
-    input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
-        border: 1px solid red;
-    }
-</style>
 
-<div ng-show="searchCompleted == false">
+<div ng-show="invalidQueryParam == true">
+    <h3 style="color:red">Felaktig Sql-tabell Parameter, Ogiltligt Rapportmall</h3>
+    <br />
+    <h3 style="color:red">Kontakta IT</h3>
+    <br />
+    <div>
+        <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+    </div>
+</div>
+
+<div ng-show="searchCompleted == false && invalidQueryParam == false">
     <form name="searchForm">
         <h1>Sök</h1>
         <h4>Parametrar</h4>
         <div>
-            <a href="/#!/queryList"><p> Tillbaka till listan </p></a>
+            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
         </div>
         <hr />
         <div ng-repeat="i in searchInfo.queryParams track by $index">
@@ -25,15 +30,13 @@
                 <span ng-show="searchForm.dateInput{{$index}}.$touched && searchForm.dateInput{{$index}}.$error.required">Välj ett datum</span>
 
                 <div ng-if="i.typeId==3">
-                    <label style="margin-right:25px">
-                        <input ng-model="i.value" type="radio" value="TRUE" ng-required="i.paramOptional == false" />JA
-                    </label>
-                    <label>
-                        <input ng-model="i.value" type="radio" value="FALSE" ng-required="i.paramOptional == false" />NEJ
-                    </label>
+                        <input ng-model="i.value" type="radio" value="TRUE" ng-required="i.paramOptional == false" /> ja
+                        <input style="margin-left:25px" ng-model="i.value" type="radio" value="FALSE" ng-required="i.paramOptional == false" /> nej
                 </div>
 
-                <select ng-required="i.paramOptional == false" name="tableInput{{$index}}" ng-model="i.value" class="form-control inputs" ng-if="i.typeId==4" ng-options="option.keyColumn as option.displayColumn for option in i.sqlLists">
+                <select ng-required="i.paramOptional == false" name="tableInput{{$index}}"
+                        ng-model="i.value" class="form-control inputs" ng-if="i.typeId==4" 
+                        ng-options="option.keyColumn as option.displayColumn for option in i.sqlLists">
                 </select>
                 <span ng-show="searchForm.tableInput{{$index}}.$touched && searchForm.tableInput{{$index}}.$error.required">Välj ett alternativ ifrån listan</span>
 
@@ -45,11 +48,13 @@
 
         </div>
         <p style="color:red">{{dateInputMessage}}</p>
-        <br />
-        <div>
-            <a href="/#!/queryList"><p> Tillbaka till listan </p></a>
+        <div ng-if="searchInfo.queryParams.length > 2">
+            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
         </div>
-
+        <div>
+            <h4 style="color:red">{{noResult}}</h4>
+            <br />
+        </div>
         <div class="form-group">
             <input ng-disabled="searchForm.$invalid" ng-click="searchQuery()" type="submit" name="submit" value="Visa resultat på sidan" class="btn btn-primary" />
         </div>
@@ -62,30 +67,44 @@
 
 <div ng-show="searchCompleted == true">
     <h1>Resultat</h1>
-
+    
     <div>
-        <a href="/#!/"><p> Tillbaka till listan</p></a>
+        <a ng-if="searchResult.rowValues.length > 10" href="/#/queryList"><p> Tillbaka till listan</p></a>
     </div>
     <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <td ng-repeat="column in searchResult.columnNames">
-                    {{column}}
-                </td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="row in searchResult.rowValues">
+    <div ng-if="searchResult.rowValues.length == 0">
+        <h3 style="color:red">{{noResultView}}</h3>
+        <br />
+    </div>
+    <div ng-if="searchResult.rowValues.length != 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-repeat="column in searchResult.columnNames">
+                        {{column}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in searchResult.rowValues">
 
-                <td ng-repeat="columnnValue in row track by $index">
-                    {{columnnValue}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <td ng-repeat="columnnValue in row track by $index">
+                        {{columnnValue}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="form-group">
+            <input ng-click="searchQueryExcel()" type="submit" value="Ladda ned som excel" class="btn btn-primary" />
+        </div>
+        <br />  
+        <div class="form-group">
+            <input ng-click="searchAgain()" class="btn btn-success" type="button" value="Sök igen" />
+        </div>
+    </div>
     <br />
     <div>
-        <a href="/#!/queryList"><p> Tillbaka till listan</p></a>
+        <a href="/#/queryList"><p> Tillbaka till listan</p></a>
     </div>
 </div>

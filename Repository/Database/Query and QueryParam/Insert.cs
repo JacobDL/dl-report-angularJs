@@ -11,6 +11,12 @@ namespace Repository.Database.Query_and_QueryParam
     {
         private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
 
+        /// <summary>
+        /// Create the Query with the parameters added by the user (IT-role needed) and 
+        /// then calls the "InsertQueryParam"-function to create the associated QueryParams
+        /// </summary>
+        /// <param name="query">GroupName and Sql properties added by the user</param>
+        /// <param name="queryParams">Properties that is in the database except Id, added by the user</param>
         internal void InsertQuery(Query query, List<QueryParam> queryParams)
         {
             var queryId = 0;
@@ -29,6 +35,11 @@ namespace Repository.Database.Query_and_QueryParam
             InsertQueryParam(queryParams, queryId);
         }
 
+        /// <summary>
+        /// Creates all the QueryParameters to the database (IT-role needed)
+        /// </summary>
+        /// <param name="queryParams">Properties that is in the database except Id, added by the user</param>
+        /// <param name="queryId">Id of the associated Query for foreign key reference</param>
         public void InsertQueryParam(List<QueryParam> queryParams, int queryId)
         {
             string queryString = $"INSERT INTO QueryParam (QueryId, [Name], TypeId, ParameterCode, TableName, ColumnName, KeyColumn, ParamOptional) " +

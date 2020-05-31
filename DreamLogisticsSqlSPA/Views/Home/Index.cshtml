@@ -1,7 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-    <div class="container-fluid">
-        <div ng-view></div>
+
+<style>
+    .web-bubble {
+        border-radius: 10px;
+        padding: 25px;
+        background: white;
+        box-shadow: 5px 1px 11px grey;
+    }
+</style>
+
+    <div style="padding-right:0px; padding-left:0px" class="container-fluid">
+        <div class="web-bubble">
+            <div ng-view></div>
+        </div>
     </div>
     

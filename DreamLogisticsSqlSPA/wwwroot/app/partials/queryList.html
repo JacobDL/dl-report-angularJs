@@ -1,9 +1,9 @@
 ﻿<link rel="stylesheet" href="/css/queryList.css" />
 
 <section class="flex-container-query-list">
-    <div style="width:75%">
+    <div style="width:78%">
         <h1> Sök Rapport</h1>
-        <a ng-if="isAdmin == true" id="create-new-query" href="/#!/create"><i class="fas fa-plus-circle"> Skapa Ny</i></a>
+        <a ng-if="isAdmin == false" id="create-new-query" href="/#/create"><p>+Skapa Ny</p></a>
         <p id="delete-message-top">Rapportmall Raderad!</p>
     </div>
     <div id="search-container">
@@ -14,22 +14,22 @@
     </div>
 </section>
 <h4> Rapportmallar</h4>
-
 <h5 style="color:darkred"> {{noQueriesMessage}}</h5>
 
 <table id="table-border" class="table">
     <tbody ng-repeat="i in queries | filter: table">
-        <tr ng-if="isAdmin == true" class="query-btns-td" id="query-row-{{i.id}}">
-            <td><a href="/#!/search/{{i.id}}" class="btn btn-success query-btns">{{i.groupName}}</a></td>
-            <!--<td class="options-btn"><a href="/#!/search/{{i.id}}">{{i.groupName}}</a></td>-->
+        <tr ng-if="isAdmin == false" id="query-row-{{i.id}}">
+            <td id="query-btn-padding"><a href="#/search/{{i.id}}"  class="btn btn-success query-btns">{{i.groupName}}</a></td>
+
             <td class="options-btns">
-                <a title="Redigera" class="options-btn" href="/#!/edit/{{i.id}}"><i class="fas fa-edit drop-down-btns"></i></a>
+                <a title="Redigera" class="options-btn" href="/#/edit/{{i.id}}"><i class="fas fa-edit drop-down-btns"></i></a>
                 <a title="Detaljer" class="options-btn"><i ng-click="details(i.id)" class="fas fa-info-circle drop-down-btns"></i></a>
                 <a title="Radera" class="options-btn"><i ng-click="delete(i.id)" class="fas fa-trash-alt drop-down-btns"></i></a>
             </td>
         </tr>
-        <tr ng-if="isAdmin == false" class="query-btns-user-td">
-            <td colspan="2"><a href="/#!/search/{{i.id}}" class="btn btn-success query-btns-user">{{i.groupName}}</a></td>
+        <tr ng-if="isAdmin == true">
+            
+            <td colspan="2" id="query-btns-user-td"><a href="#/search/{{i.id}}" class="btn btn-success query-btns-user">{{i.groupName}}</a></td>
         </tr>
         <tr id="details-option-{{i.id}}" class="details-drop-down-section">
             <td>
@@ -52,7 +52,7 @@
                                     <th>Valfri kolumn</th>
                                 </tr>
                             </thead>
-                            <tbody ng-repeat="param in query.queryParams">
+                            <tbody ng-repeat="param in query" ng-if="param.queryId == i.id">
                                 <tr>
                                     <td>{{param.id}}</td>
                                     <td>{{param.name}}</td>
@@ -97,4 +97,3 @@
         </tr>
     </tbody>
 </table>
-

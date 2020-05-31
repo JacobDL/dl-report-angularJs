@@ -9,49 +9,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Repository.Models;
 using Repository.Repositories;
-using static DreamLogisticsSqlSPA.ControllerLogic.UserServiceLogic;
+
 
 namespace DreamLogisticsSqlSPA.API
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        //private IUserService _userService;
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
 
-        //public LoginController(IUserService userService)
-        //{
-        //    _userService = userService;
-        //}
-
-        [HttpPost]
-        public IActionResult GetUser(AuthenticateModel user)
+        public LoginController(IJwtAuthenticationManager jwtAuthenticationManager)
         {
-            User validUser = UserRepository.ValidateUser(user);
-            //UserServiceLogic service = new UserServiceLogic();
-            //validUser = service.Authenticate(validUser.Username, validUser.Password);
-            return Ok(validUser);
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
-        //[AllowAnonymous]
-        //[HttpPost("authenticate")]
-        //public IActionResult Authenticate([FromBody]AuthenticateModel model)
-        //{
-        //    var user = _userService.Authenticate(model.Username, model.Password);
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Authenticate(AuthenticateModel user)
+        {
+            var token = jwtAuthenticationManager.Authenticate(user);
 
-        //    if (user == null)
-        //        return BadRequest(new { message = "Username or password is incorrect" });
-
-        //    return Ok(user);
-        //}
-
-        //[HttpGet]
-        //public IActionResult GetAll()
-        //{
-        //    var users = _userService.GetAll();
-        //    return Ok(users);
-        //}
+            return Ok(token);
+        }
 
     }
 }

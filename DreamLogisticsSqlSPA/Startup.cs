@@ -1,13 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using DreamLogisticsSqlSPA.ControllerLogic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Web;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.RegularExpressions;
 
 namespace DreamLogisticsSqlSPA
 {
@@ -24,6 +32,58 @@ namespace DreamLogisticsSqlSPA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = appSettings.Secret;
+
+            services.AddAuthentication(au =>
+            {
+                au.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                au.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.RequireHttpsMetadata = false;
+                jwt.SaveToken = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+                jwt.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = AdditionalValidation
+                };
+            });
+
+            services.AddScoped<IJwtAuthenticationManager, JwtAuthenticationManager>();
+        }
+
+        private static Task AdditionalValidation(TokenValidatedContext context)
+        {
+            var accessToken = context.SecurityToken as JwtSecurityToken;
+            var jsonTokenString = accessToken.Payload;
+            string role = jsonTokenString["role"].ToString();
+            if (role == "2")
+            {
+                string query = "/api/query";
+                string search = "/api/search/";
+                var path = context.Request.Path.Value;
+                if (path == query + "/QueryParams" || path.Contains(query + "/List/") || path == search + "Excel" || path == search || path == query)
+                {
+                    return Task.CompletedTask;
+                }
+                else
+                {
+                    context.Fail("Failed additional validation");
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +103,8 @@ namespace DreamLogisticsSqlSPA
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

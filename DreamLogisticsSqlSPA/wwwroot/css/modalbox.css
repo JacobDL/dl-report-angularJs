@@ -1,0 +1,57 @@
+﻿.modalbox .box {
+    background-color: rgba(57, 106, 72, 0.9);
+    margin: 0 auto;
+    min-width: 210px;
+    padding: 40px;
+    width: 30%;
+    margin-top: 100px;
+    max-height: 45em;
+    overflow-y: scroll;
+}
+
+.modalbox .title {
+    border-bottom: 1px solid #ccc;
+    font-family: verdana;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    margin: 0;
+    padding: 0 0 10px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.modalbox .content {
+    display: block;
+    font-family: Verdana;
+    font-size: 18px;
+    line-height: 22px;
+    padding: 10px 0 0;
+    color: #fff;
+}
+
+.modalbox .close {
+    color: #fff;
+    display: block;
+    float: right;
+    font-family: Verdana;
+    font-size: 30px;
+    height: 25px;
+    text-decoration: none;
+}
+
+
+.modalbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    top: 10em;
+    left: 0;
+    color: #333333;
+}
+
+    .modalbox:target {
+        display: block;
+        outline: none;
+    }

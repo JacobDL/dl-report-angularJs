@@ -10,6 +10,12 @@ namespace Repository.Database
     {
         private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
 
+        /// <summary>
+        /// Gets the column that is used to be the key and the column that is used to be displayed to the user
+        /// from the Table matching the QueryParam.TableName value
+        /// </summary>
+        /// <param name="queryParam">KeyColumn, DisplayColumn and TableName is used</param>
+        /// <returns>a list of SqlTable (the two columns of the entire TableName table)</returns>
         internal List<SqlTable> GetSqlList(QueryParam queryParam)
         {
             List<SqlTable> tableList = new List<SqlTable>();
@@ -18,36 +24,36 @@ namespace Repository.Database
             {
                 string queryString = $"SELECT {queryParam.KeyColumn},{queryParam.DisplayColumn} FROM {queryParam.TableName}";
 
-
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     using (SqlCommand cmd = new SqlCommand(queryString, connection))
                     {
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        try
                         {
-                            if (reader.HasRows)
+                            using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-
-                                while (reader.Read())
+                                if (reader.HasRows)
                                 {
-                                    SqlTable table = new SqlTable();
+                                    while (reader.Read())
+                                    {
+                                        SqlTable table = new SqlTable();
 
-                                    //table.Id = int.Parse(reader["Id"].ToString());
-                                    table.DisplayColumn = reader[$"{queryParam.DisplayColumn}"].ToString();
-                                    table.KeyColumn = reader[$"{queryParam.KeyColumn}"].ToString();
+                                        table.DisplayColumn = reader[$"{queryParam.DisplayColumn}"].ToString();
+                                        table.KeyColumn = reader[$"{queryParam.KeyColumn}"].ToString();
 
-                                    tableList.Add(table);
+                                        tableList.Add(table);
+                                    }
                                 }
-
-
                             }
+                        }
+                        catch
+                        {
+                            
                         }
                     }
                 }
             }
-
-
             return tableList;
         }
     }

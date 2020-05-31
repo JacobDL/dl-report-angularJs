@@ -3,8 +3,9 @@
     "outputFileName": "wwwroot/js/app.js",
     "inputFiles": [
       "wwwroot/app/app.module.js",
-      "wwwroot/app/controllers/*.js"
-
+      "wwwroot/app/controllers/*.js",
+      "wwwroot/app/services/*.js",
+      "wwwroot/app/Interceptors/*.js"
     ],
     "minify": { "enabled": true }
   }

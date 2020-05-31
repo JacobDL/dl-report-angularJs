@@ -1,9 +1,11 @@
 ﻿<link rel="stylesheet" href="/css/login.css" />
-<div>
-    <div class="box">
-        
-        <h2>Login</h2>
-        <form>
+
+<div style="height:40em;" >
+<div id="dream-background-logo">
+</div>
+        <div class="box">
+
+            <h2>Login</h2>
             <div class="inputBox">
                 <input type="text" name="" ng-model="login.username" required="">
                 <label>Användarnamn</label>
@@ -12,8 +14,8 @@
                 <input type="password" name="" ng-model="login.password" required="">
                 <label>Lösenord</label>
             </div>
-            <input ng-click="loginAttempt()" type="submit" name="" value="Logga in">
+            <input ng-click="loginAttempt()" type="button" name="" value="Logga in">
             <p style="color:red; margin-top:1rem">{{invalidUser}}</p>
-        </form>
-    </div>
+        </div>
+    
 </div>

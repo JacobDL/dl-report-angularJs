@@ -10,6 +10,12 @@ namespace Repository.Database.Query_and_QueryParam
     {
         private string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
 
+        /// <summary>
+        /// Updates both the Query and all its associated QueryParams in the database,
+        /// with the values from the edit-view, whether or not they were new (changed) or old (untouched) (IT-role needed)
+        /// </summary>
+        /// <param name="query">all database column values except Id</param>
+        /// <param name="queryParams">all database column values except Id</param>
         internal void UpdateQuery(Query query, List<QueryParam> queryParams)
         {
             string queryParamString = "UPDATE QueryParam SET [Name]=@Name, TypeId=@TypeId, ParameterCode=@ParameterCode," +

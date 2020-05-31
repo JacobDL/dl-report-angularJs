@@ -1,0 +1,167 @@
+﻿<link rel="stylesheet" href="/css/createAndEdit.css" />
+<link rel="stylesheet" href="/css/modalbox.css" />
+
+<div ng-show="queryEdited == false">
+    <form name="createForm">
+        <h1>{{title}}</h1>
+        <div>
+            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+        </div>
+        <hr />
+        <label> Gruppnamn </label>
+        <input name="groupName" ng-model="queryData.query.groupName" style="width:700px" class="form-control" ng-required="true" />
+        <span class="span-tag" ng-show="createForm.groupName.$touched && createForm.groupName.$error.required">Gruppnamn är obligatoriskt</span>
+        <br />
+        <br />
+        <label> Sql-Query </label>
+        <textarea name="sql" style="height:100px" ng-model="queryData.query.sql" class="form-control" ng-required="true"></textarea>
+        <span class="span-tag" ng-show="createForm.sql.$touched && createForm.sql.$error.required">Sql-Queryn är obligatorisk</span>
+        <br />
+        <hr />
+        <br />
+        <div ng-repeat="i in queryData.queryParams">
+            <div class="query-params flex-container">
+                <div class="form-group">
+                    <label>Namn</label>
+                    <input name="nameInput{{$index}}" value="{{i.name}}" ng-model="i.name" id="name-input" class="form-control" ng-required="true" />
+                    <span class="span-tag" ng-show="createForm.nameInput{{$index}}.$touched && createForm.nameInput{{$index}}.$error.required">Fyll i Namn</span>
+                </div>
+                <div class="form-group">
+                    <label>Kod</label>
+                    <input name="codeInput{{$index}}" value="{{i.parameterCode}}" ng-model="i.parameterCode" class="form-control" ng-required="true" />
+                    <span class="span-tag" ng-show="createForm.codeInput{{$index}}.$touched && createForm.codeInput{{$index}}.$error.required">Fyll i Kod</span>
+                </div>
+                <div class="form-group">
+                    <label>Typ</label>
+                    <select ng-init="i.typeId = i.typeId.toString()" ng-change="addOptions({{$index}})" ng-model="i.typeId" class="form-control">
+                        <option value="1">
+                            Text
+                        </option>
+                        <option value="2">
+                            Datum
+                        </option>
+                        <option value="3">
+                            Boolean
+                        </option>
+                        <option value="4">
+                            Sql-Tabell
+                        </option>
+                        <option value="5">
+                            Siffra
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tabellnamn</label>
+                    <input name="tableInput{{$index}}" ng-disabled="i.typeId != 4" value="{{i.tableName}}" ng-model="i.tableName" class="form-control" ng-required="i.typeId == 4" />
+                    <span class="span-tag" ng-show="createForm.tableInput{{$index}}.$touched && createForm.tableInput{{$index}}.$error.required">Fyll i Tabellnamn</span>
+                </div>
+                <div class="form-group">
+                    <label>Visningskolumn</label>
+                    <input name="displayInput{{$index}}" ng-disabled="i.typeId != 4" value="{{i.displayColumn}}" ng-model="i.displayColumn" class="form-control" ng-required="i.typeId == 4" />
+                    <span class="span-tag" ng-show="createForm.displayInput{{$index}}.$touched && createForm.displayInput{{$index}}.$error.required">Fyll i Visningskolumn</span>
+                </div>
+                <div class="form-group">
+                    <label>Nyckelkolumn</label>
+                    <input name="keyInput{{$index}}" ng-disabled="i.typeId != 4" value="{{i.keyColumn}}" ng-model="i.keyColumn" class="form-control" ng-required="i.typeId == 4" />
+                    <span class="span-tag" ng-show="createForm.keyInput{{$index}}.$touched && createForm.keyInput{{$index}}.$error.required">Fyll i Nyckelkolumn</span>
+                </div>
+                <button type="button" name="remove" class="btn btn-danger btn-sm btn-style" ng-click="removeRow($index)"><span class="glyphicon glyphicon-minus"></span></button>
+            </div>
+            <div class="flex-sql-section">
+                <div style="width:20%" class="flex-sql">
+                    <div style="width:2em">
+                        <input ng-model="i.paramOptional" style="width:2vh" type="checkbox" class="form-control" />
+                    </div>
+                    <div>
+                        <label style="line-height:3em">Valfri parameter</label>
+                    </div>
+                </div>
+                <div style="width:3%" class="flex-sql">
+                    <div ng-show="i.typeId == 4">
+                        <a title="Testa Sql-Tabellen"><i ng-mouseleave="setBoolFalse()" ng-mouseenter="setBoolTrue()" ng-click="testSqlValues(i)" class="fas fa-vial test-sql-btn"></i></a>
+                    </div>
+                    <div class="modalbox" id="text">
+                        <div ng-mouseenter="modalBoxEnter()"  ng-mouseleave="modalBoxLeave()" class="box">
+                            <span ng-click="close()" class="close">x</span>
+                            <p class="title">Sql-Tabell</p>
+                            <div class="content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="width:13em">Visningskolumn</th>
+                                            <th>Nyckelkolumn</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sql in sqlList">
+                                            <td>{{sql.displayColumn}}</td>
+                                            <td>{{sql.keyColumn}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-show="sqlList.length == 0">
+                                <p class="content" style="color:black">Det Fanns Ingen Matchande Sql-Tabell</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <br />
+        </div>
+
+        <br />
+        <div class="form-group">
+            <input type="button" value="+Lägg till Parameter" class="btn btn-primary" ng-click="addRow()" />
+        </div>
+
+
+        <div class="form-group">
+            <input ng-disabled="createForm.$invalid" ng-click="submitQuery()" type="submit" value="Spara" class="btn btn-success" />
+        </div>
+        <br />
+        <div>
+            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+        </div>
+    </form>
+</div>
+
+<div ng-show="queryEdited == true">
+    <br />
+    <h1 style="color:#5cb85c">{{completeMessage}}</h1>
+    <br />
+    <hr />
+    <br />
+    <h2><b style="color:#5cb85c">Namn:</b> {{queryData.query.groupName}}</h2>
+    <h3><b style="color:#5cb85c">Query:</b> {{queryData.query.sql}}</h3>
+    <br />
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Typ</th>
+                <th>Kod</th>
+                <th>Tabellnamn</th>
+                <th>Visningskolumn</th>
+                <th>Nyckelkolumn</th>
+                <th>Valfri Parameter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="param in queryData.queryParams">
+                <td>{{param.name}}</td>
+                <td>{{param.typeId}}</td>
+                <td>{{param.parameterCode}}</td>
+                <td>{{param.tableName}}</td>
+                <td>{{param.displayColumn}}</td>
+                <td>{{param.keyColumn}}</td>
+                <td>{{param.paramOptional}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="/#/queryList">Tillbaka</a>
+</div>

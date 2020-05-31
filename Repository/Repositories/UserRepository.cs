@@ -13,5 +13,11 @@ namespace Repository.Repositories
             UserDb db = new UserDb();
             return db.ValidateUser(user);
         }
+
+        public static List<AuthenticateModel> GetAllUsers()
+        {
+            UserDb db = new UserDb();
+            return db.GetAllUsers();
+        }
     }
 }

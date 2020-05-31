@@ -12,14 +12,16 @@ using Repository.Models;
 using Repository.Repositories;
 using Repository.Repositories.Query_and_QueryParam;
 using Repository.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace DreamLogisticsSqlSPA.API
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class QueryController : ControllerBase
     {
-        public bool IsAdmin { get; set; } = true;
 
         //Gets all rows from the table [Query] 
         [HttpGet]
@@ -29,6 +31,13 @@ namespace DreamLogisticsSqlSPA.API
             return Ok(queries);
         }
 
+        //Gets all rows from the table [QueryParam] 
+        [HttpGet("QueryParams")]
+        public IActionResult GetAllQueryParams()
+        {
+            List<QueryParam> queryParams = QueryRepository.GetAllQueryParams();
+            return Ok(queryParams);
+        }
 
         //Gets [Query] row with its QueryParams and TypeId=4 lists
         [HttpGet("List/{queryId}")]
@@ -43,40 +52,33 @@ namespace DreamLogisticsSqlSPA.API
         [HttpGet("NoList/{queryId}")]
         public IActionResult GetQueryModelWithoutList(int queryId)
         {
-            if (IsAdmin)
-            {
-                bool needSqlList = false;
-                QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryViewModel(queryId, needSqlList);
-                return Ok(svm);
-            }
-            return Ok();
+            bool needSqlList = false;
+            QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryViewModel(queryId, needSqlList);
+            return Ok(svm);
         }
+
+        [HttpPost("SqlList")]
+        public IActionResult GetSqlList(QueryParam queryParam)
+        {
+            List<SqlTable> sqlList = SqlListRepository.GetSqlList(queryParam);
+            return Ok(sqlList);
+        }
+
 
         //Inserts the information of both the new Query and QueryParams into the table [Query] and [QueryParam]
         [HttpPost("Create")]
-        public IActionResult CreateQuery([FromBody] CreateViewModel formData)
+        public IActionResult CreateQuery([FromBody] QueryAndQueryParamsViewModel createModel)
         {
-            if (IsAdmin)
-            {
-
-                Query query = new Query(formData.Sql, formData.GroupName);
-                List<QueryParam> queryParams = QueryControllerLogic.ConvertQueryParams(formData);
-
-                QueryRepository.InsertQuery(query, queryParams);
-            }
-            return Redirect("/#!/");
+            QueryRepository.InsertQuery(createModel.Query, createModel.QueryParams);
+            return Ok();
         }
 
         //Deletes the chosen Query and attached QueryParams from the database
         [HttpDelete("DeleteQuery/{queryId}")]
         public IActionResult DeleteQuery(int queryId)
         {
-            if (IsAdmin)
-            {
-                QueryRepository queryRepository = new QueryRepository();
-                queryRepository.DeleteQueryById(queryId);
-
-            }
+            QueryRepository queryRepository = new QueryRepository();
+            queryRepository.DeleteQueryById(queryId);
             return Ok();
         }
 

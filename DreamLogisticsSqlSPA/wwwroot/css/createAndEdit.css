@@ -1,0 +1,49 @@
+﻿.query-params div{
+    width: 10em;
+    font-size: 1em;
+    padding-right:1em;
+    padding-bottom:8px;
+}
+.query-params {
+    position: relative;
+}
+.flex-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container > div,section {
+    flex-grow:1;
+    flex-basis: 1;
+}
+.flex-sql-section {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+.flex-sql {
+    display: flex;
+    flex-direction: row;
+}
+.btn-style {
+    height: 3em;
+    width: 3em;
+    align-self: center;
+}
+.span-tag{
+    position: absolute;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.test-sql-btn {
+    color: #5ba045;
+    font-size: 2em;
+}
+    .test-sql-btn:hover {
+        color: #146636;
+        cursor: pointer;
+    }
+

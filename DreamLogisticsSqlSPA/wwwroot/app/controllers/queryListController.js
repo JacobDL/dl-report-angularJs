@@ -1,35 +1,46 @@
-﻿myControllers.controller('QueryListController', ['$scope', '$http',
-    function QueryListController($scope, $http) {
+﻿myControllers.controller('QueryListController', ['$scope', '$http', '$window', '$rootScope',
+    function QueryListController($scope, $http, $window, $rootScope) {
+
+        window.addEventListener('keydown', keyboardEvents);
+        function keyboardEvents(event) {
+            if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
+                const detailsSections = document.getElementsByClassName("details-drop-down-section");
+                const deleteSections = document.getElementsByClassName("delete-drop-down-section");
+
+                for (var del of deleteSections) {
+                    del.style.display = "none";
+                }
+                for (var det of detailsSections) {
+                    det.style.display = "none";
+                }
+            }
+        };
+
         $scope.isAdmin = true;
+
+        if ($rootScope.user.roleId === "1") {
+            $scope.isAdmin = false;
+            $http.get("https://localhost:44313/api/query/QueryParams")
+                .then(function (response) {
+                    $scope.query = response.data;
+                });
+        }
 
         $http.get("https://localhost:44313/api/query")
             .then(function (response) {
+                $scope.isAuthorized = true;
                 $scope.queries = response.data;
-                console.log($scope.queries)
+
                 if ($scope.queries == 0) {
                     $scope.noQueriesMessage = 'Det finns inga rapportmallar att välja på';
                 }
             });
 
+       //==============================================================================================================================
+        //==============================================================================================================================
+        //This section is for IT-role only, check details and delete Query/QueryParams (IT-role = 1)
+
         $scope.details = function (id) {
-
-            //const closeDetails = document.getElementsByClassName("details-drop-down-section");
-            //const closeDeletes = document.getElementsByClassName("delete-drop-down-section");
-
-            //for (var deletes of closeDeletes) {
-            //    deletes.style.display = "none";
-            //}
-
-            //for (var details of closeDetails) {
-            //    details.style.display = "none";
-            //}
-
-            $http.get("https://localhost:44313/api/query/NoList/" + id) 
-                .then(function (response) {
-
-                    $scope.query = response.data;
-
-                });
 
             const options = document.getElementById("details-option-" + id);
 
@@ -64,7 +75,7 @@
         }
 
         $scope.deleteConfirmed = function (id) {
-            
+
             $http.delete("https://localhost:44313/api/query/DeleteQuery/" + id)
 
             const deleteOptions = document.getElementById("delete-option-" + id);
@@ -89,7 +100,5 @@
             deleteConfirmed.style.display = "none";
             deleteMessage.style.display = "none";
         }
-
-
 
     }]);
