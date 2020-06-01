@@ -18,7 +18,7 @@
 
         $scope.isAdmin = true;
 
-        if ($rootScope.user.roleId === "1") {
+        if ($rootScope.user.roleId === '4') {
             $scope.isAdmin = false;
             $http.get("https://localhost:44313/api/query/QueryParams")
                 .then(function (response) {
@@ -55,7 +55,6 @@
         $scope.delete = function (index) {
 
             const options = document.getElementById("delete-option-" + index);
-            console.log(options.style.display);
             if (options.style.display == "table-row") {
                 options.style.display = "none"
             }
@@ -66,7 +65,6 @@
         };
 
         $scope.closeAll = function (id) {
-            console.log(id);
             const deleteOptions = document.getElementById("delete-option-" + id);
             const deatailsOptions = document.getElementById("details-option-" + id);
 

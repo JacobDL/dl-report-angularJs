@@ -43,7 +43,6 @@ myApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function (
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             
             var token = $window.localStorage.getItem('token')
-            console.log(token);
             if (token === null || typeof token === 'undefined' || token === '') {
                 if (location.hash.indexOf('login') === -1) {
                     $window.location.href = '/#/login';

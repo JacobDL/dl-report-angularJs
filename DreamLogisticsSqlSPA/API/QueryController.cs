@@ -14,6 +14,7 @@ using Repository.Repositories.Query_and_QueryParam;
 using Repository.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DreamLogisticsSqlSPA.API
 {
@@ -22,12 +23,21 @@ namespace DreamLogisticsSqlSPA.API
     [ApiController]
     public class QueryController : ControllerBase
     {
+        private readonly AppSettings _appSettings;
+        private readonly IQueryRepository _queryRepository;
+        private readonly ISqlListRepository _sqlListRepository;
+        public QueryController(IOptions<AppSettings> appSettings, IQueryRepository queryRepository, ISqlListRepository sqlListRepository)
+        {
+            _queryRepository = queryRepository;
+            _appSettings = appSettings.Value;
+            _sqlListRepository = sqlListRepository;
+        }
 
         //Gets all rows from the table [Query] 
         [HttpGet]
         public IActionResult GetQueries()
         {
-            List<Query> queries = QueryRepository.GetQueries();
+            List<Query> queries = _queryRepository.GetQueries();
             return Ok(queries);
         }
 
@@ -35,7 +45,7 @@ namespace DreamLogisticsSqlSPA.API
         [HttpGet("QueryParams")]
         public IActionResult GetAllQueryParams()
         {
-            List<QueryParam> queryParams = QueryRepository.GetAllQueryParams();
+            List<QueryParam> queryParams = _queryRepository.GetAllQueryParams();
             return Ok(queryParams);
         }
 
@@ -44,7 +54,8 @@ namespace DreamLogisticsSqlSPA.API
         public IActionResult GetQueryModelWithList(int queryId)
         {
             bool needSqlList = true;
-            QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryViewModel(queryId, needSqlList);
+            QueryControllerLogic qcl = new QueryControllerLogic(_queryRepository);
+            QueryAndQueryParamsViewModel svm = qcl.GetQueryViewModel(queryId, needSqlList);
             return Ok(svm);
         }
 
@@ -53,14 +64,15 @@ namespace DreamLogisticsSqlSPA.API
         public IActionResult GetQueryModelWithoutList(int queryId)
         {
             bool needSqlList = false;
-            QueryAndQueryParamsViewModel svm = QueryControllerLogic.GetQueryViewModel(queryId, needSqlList);
+            QueryControllerLogic qcl = new QueryControllerLogic(_queryRepository);
+            QueryAndQueryParamsViewModel svm = qcl.GetQueryViewModel(queryId, needSqlList);
             return Ok(svm);
         }
 
         [HttpPost("SqlList")]
         public IActionResult GetSqlList(QueryParam queryParam)
         {
-            List<SqlTable> sqlList = SqlListRepository.GetSqlList(queryParam);
+            List<SqlTable> sqlList = _sqlListRepository.GetSqlList(queryParam);
             return Ok(sqlList);
         }
 
@@ -69,7 +81,7 @@ namespace DreamLogisticsSqlSPA.API
         [HttpPost("Create")]
         public IActionResult CreateQuery([FromBody] QueryAndQueryParamsViewModel createModel)
         {
-            QueryRepository.InsertQuery(createModel.Query, createModel.QueryParams);
+            _queryRepository.InsertQuery(createModel.Query, createModel.QueryParams);
             return Ok();
         }
 
@@ -77,8 +89,8 @@ namespace DreamLogisticsSqlSPA.API
         [HttpDelete("DeleteQuery/{queryId}")]
         public IActionResult DeleteQuery(int queryId)
         {
-            QueryRepository queryRepository = new QueryRepository();
-            queryRepository.DeleteQueryById(queryId);
+            string connectionString = _appSettings.AdministratorConnectionString;
+            _queryRepository.DeleteQueryById(queryId);
             return Ok();
         }
 
@@ -86,7 +98,8 @@ namespace DreamLogisticsSqlSPA.API
         [HttpPut("UpdateQuery")]
         public IActionResult UpdateQuery(QueryAndQueryParamsViewModel updateModel)
         {
-            QueryControllerLogic.UpdateQuery(updateModel);
+            QueryControllerLogic qcl = new QueryControllerLogic(_queryRepository);
+            qcl.UpdateQuery(updateModel);
             return Ok();
         }
 

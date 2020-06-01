@@ -1,4 +1,6 @@
-﻿using Repository.Models;
+﻿using Microsoft.Extensions.Options;
+using Repository.Database.Query_and_QueryParam.Interfaces;
+using Repository.Models;
 using Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -7,9 +9,15 @@ using System.Text;
 
 namespace Repository.Database.Query_and_QueryParam
 {
-    class SelectQueryParam
+    public class SelectQueryParam : ISelectQueryParam
     {
-        private string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
+        private readonly AppSettings _appSettings;
+        private readonly ISqlListRepository _sqlListRepository;
+        public SelectQueryParam(IOptions<AppSettings> appSettings, ISqlListRepository sqlListRepository)
+        {
+            _appSettings = appSettings.Value;
+            _sqlListRepository = sqlListRepository;
+        }
 
         /// <summary>
         /// Gets all the QueryParams with the chosen queryId and also the requested sql-lists from the database
@@ -17,8 +25,10 @@ namespace Repository.Database.Query_and_QueryParam
         /// <param name="id">QueryId chosen by the user</param>
         /// <param name="needSqlList">a bool that determines whether or not to get the sql-lists</param>
         /// <returns>a list of QueryParams</returns>
-        internal List<QueryParam> GetQueryParamsById(int id, bool needSqlList)
+        public List<QueryParam> GetQueryParamsById(int id, bool needSqlList)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             List<QueryParam> queryParams = new List<QueryParam>();
 
             SqlConnection connection = new SqlConnection(connectionString);
@@ -45,7 +55,7 @@ namespace Repository.Database.Query_and_QueryParam
                     };
                     if (query.TypeId == 4 && needSqlList == true)
                     {
-                        query.SqlLists = SqlListRepository.GetSqlList(query);
+                        query.SqlLists = _sqlListRepository.GetSqlList(query);
                     }
                     queryParams.Add(query);
 
@@ -61,8 +71,10 @@ namespace Repository.Database.Query_and_QueryParam
         /// Gets all the column values of all the QueryParams from the database, Only used for the detail-view so far
         /// </summary>
         /// <returns>A list of all the QueryParams</returns>
-        internal List<QueryParam> GetAllQueryParams()
+        public List<QueryParam> GetAllQueryParams()
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             List<QueryParam> queryParams = new List<QueryParam>();
 
             SqlConnection connection = new SqlConnection(connectionString);

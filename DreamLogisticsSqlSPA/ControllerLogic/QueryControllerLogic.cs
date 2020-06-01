@@ -1,4 +1,5 @@
-﻿using Repository.Models;
+﻿using Microsoft.Extensions.Options;
+using Repository.Models;
 using Repository.Repositories;
 using Repository.Repositories.Query_and_QueryParam;
 using Repository.ViewModels;
@@ -12,22 +13,27 @@ namespace DreamLogisticsSqlSPA.ControllerLogic
 {
     public class QueryControllerLogic
     {
+        private readonly IQueryRepository _queryRepository;
+        public QueryControllerLogic(IQueryRepository queryRepository)
+        {
+            _queryRepository = queryRepository;
+        }
         //Gets a Query by QueryId and the QueryParams that belongs to it
-        public static QueryAndQueryParamsViewModel GetQueryViewModel(int id, bool needSqlList)
+        public QueryAndQueryParamsViewModel GetQueryViewModel(int id, bool needSqlList)
         {
             QueryAndQueryParamsViewModel svm = new QueryAndQueryParamsViewModel();
-            svm.Query = QueryRepository.GetQueryById(id);
-            svm.QueryParams = QueryRepository.GetQueryParamsByQueryId(id, needSqlList);
+            svm.Query = _queryRepository.GetQueryById(id);
+            svm.QueryParams = _queryRepository.GetQueryParamsByQueryId(id, needSqlList);
             return svm;
         }
 
         //The overall function to update a Query
         //Deletes chosen QueryParams, Inserts newly added QueryParams and updates all other changes in the tables [Query] and [QueryParam]
-        internal static void UpdateQuery(QueryAndQueryParamsViewModel updateModel)
+        internal void UpdateQuery(QueryAndQueryParamsViewModel updateModel)
         {
             foreach (int param in updateModel.QueryParamsToDelete)
             {
-                QueryRepository.DeleteQueryParamsById(param);
+                _queryRepository.DeleteQueryParamsById(param);
             }
 
             List<QueryParam> newQueryParams = new List<QueryParam>();
@@ -38,7 +44,6 @@ namespace DreamLogisticsSqlSPA.ControllerLogic
                 if (param.Id == 0)
                 {
                     newQueryParams.Add(param);
-
                 }
                 else
                 {
@@ -46,8 +51,8 @@ namespace DreamLogisticsSqlSPA.ControllerLogic
                 }
 
             }
-            QueryRepository.InsertQueryParam(newQueryParams, updateModel.Query.Id);
-            QueryRepository.UpdateQuery(updateModel.Query, queryParamsToUpdate);
+            _queryRepository.InsertQueryParam(newQueryParams, updateModel.Query.Id);
+            _queryRepository.UpdateQuery(updateModel.Query, queryParamsToUpdate);
         }
 
         

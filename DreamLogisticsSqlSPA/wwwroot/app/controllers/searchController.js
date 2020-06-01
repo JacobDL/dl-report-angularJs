@@ -1,32 +1,36 @@
-﻿myControllers.controller('SearchController', ['$scope', '$http', '$routeParams', 'utilitiesService', '$window',
-    function SearchController($scope, $http, $routeParams, utilitiesService, $window) {
+﻿myControllers.controller('SearchController', ['$scope', '$http', '$routeParams', 'utilitiesService', '$window', '$document',
+    function SearchController($scope, $http, $routeParams, utilitiesService, $window, $document) {
 
         $scope.searchCompleted = false;
         $scope.invalidQueryParam = false;
 
-        window.addEventListener('keydown', keyboardEvents);
-        function keyboardEvents(event) {
-            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
 
-                if ($scope.searchCompleted == true) {
-                    $scope.searchQueryExcel();
-                }
-                else {
-                    $scope.searchQuery();
-                }
-            }
-            else if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
+        $document.on('keyup', keyboardEvents);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', keyboardEvents);
+        });
+        function keyboardEvents(event) {
+            if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
                 $window.location.href = '#/queryList';
             }
         };
 
         $http.get("https://localhost:44313/api/query/List/" + $routeParams.queryId)
             .then(function (response) {
-                console.log(response.data.queryParams)
                 for (var param of response.data.queryParams) {
-                    console.log(param);
-                    if (param.typeId == 4 && param.sqlLists.length == 0) {
-                        $scope.invalidQueryParam = true;
+                    if (param.typeId == 4) {
+                        if (param.sqlLists.length == 0) {
+
+                            $scope.invalidQueryParam = true;
+                        }
+                        else {
+                            console.log(param.sqlLists);
+                            param.sqlLists.unshift({
+                                displayColumn: '(ej satt)',
+                                keyColumn: null
+                            });
+                        }
                     }
 
                 }
@@ -72,15 +76,14 @@
                     console.log(error);
                 });
             }
+
         };
-        //resonse.columnNames.length
         //button for showing the result on the html page
         $scope.searchQuery = function () {
 
             var getObject = getPayloadValues();
 
             if (getObject.valid) {
-
                 $http.post("https://localhost:44313/api/Search",
                     getObject.payload
                 ).then(function (response) {
@@ -130,7 +133,7 @@
                     payload.Parameters.push({ Id: param.id, Value: param.value.toString() });
                 }
                 else {
-                    payload.Parameters.push({ Id: param.id, Value: 'null' });
+                    payload.Parameters.push({ Id: param.id, Value: null });
                 }
 
             });

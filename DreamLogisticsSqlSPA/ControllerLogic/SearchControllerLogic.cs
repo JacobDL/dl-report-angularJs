@@ -10,17 +10,22 @@ namespace DreamLogisticsSqlSPA.ControllerLogic
 {
     public class SearchControllerLogic
     {
+        private readonly IQueryRepository _queryRepository;
+        public SearchControllerLogic(IQueryRepository queryRepository)
+        {
+            _queryRepository = queryRepository;
+        }
         //Gets a Query by QueryId and the QueryParams that belongs to it
         //Also adds the values from the users search information to the "QueryAndQueryParamsViewModel"
-        internal static QueryAndQueryParamsViewModel GetQueryResult(SearchParameters parameters)
+        internal QueryAndQueryParamsViewModel GetQueryResult(SearchParameters parameters)
         {
             bool needSqlList = true;
             QueryAndQueryParamsViewModel result = new QueryAndQueryParamsViewModel();
-            result.Query = QueryRepository.GetQueryById(parameters.QueryId);
-            result.QueryParams = QueryRepository.GetQueryParamsByQueryId(parameters.QueryId, needSqlList);
+            result.Query = _queryRepository.GetQueryById(parameters.QueryId);
+            result.QueryParams = _queryRepository.GetQueryParamsByQueryId(parameters.QueryId, needSqlList);
             for (int i = 0; i < result.QueryParams.Count; i++)
             {
-                if (parameters.Parameters[i].Value != "null")
+                if (parameters.Parameters[i].Value != null)
                 {
                     result.QueryParams[i].Value = parameters.Parameters[i].Value;
                 }

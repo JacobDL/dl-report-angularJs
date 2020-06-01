@@ -16,6 +16,12 @@ using System.Web;
 using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.RegularExpressions;
+using Repository.Models;
+using Repository.Repositories.Query_and_QueryParam;
+using Repository.Database.Query_and_QueryParam.Interfaces;
+using Repository.Database.Query_and_QueryParam;
+using Repository.Database;
+using Repository.Repositories;
 
 namespace DreamLogisticsSqlSPA
 {
@@ -32,7 +38,7 @@ namespace DreamLogisticsSqlSPA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
@@ -59,6 +65,20 @@ namespace DreamLogisticsSqlSPA
                     OnTokenValidated = AdditionalValidation
                 };
             });
+            services.AddScoped<IDelete, Delete>();
+            services.AddScoped<IInsert, Insert>();
+            services.AddScoped<ISelectQuery, SelectQuery>();
+            services.AddScoped<ISelectQueryParam, SelectQueryParam>();
+            services.AddScoped<IUpdate, Update>();
+
+            services.AddScoped<IQueryRequestDb, QueryRequestDb>();
+            services.AddScoped<ISqlListDb, SqlListDb>();
+            services.AddScoped<IUserDb, UserDb>();
+
+            services.AddScoped<IQueryRequestRepository, QueryRequestRepository>();
+            services.AddScoped<ISqlListRepository, SqlListRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IQueryRepository, QueryRepository>();
 
             services.AddScoped<IJwtAuthenticationManager, JwtAuthenticationManager>();
         }

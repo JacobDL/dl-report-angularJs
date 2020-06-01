@@ -641,3 +641,8 @@ C:\Users\melfas\Documents\GitHub\dl-report-angularJs\DreamLogisticsSqlSPA\bin\De
 C:\Users\melfas\Documents\GitHub\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 C:\Users\melfas\Documents\GitHub\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\melfas\Documents\GitHub\dl-report-angularJs\DreamLogisticsSqlSPA\obj\Debug\netcoreapp3.1\DreamLogisticsSqlSPA.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\danie\source\repos\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\danie\source\repos\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\danie\source\repos\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\danie\source\repos\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+C:\Users\danie\source\repos\dl-report-angularJs\DreamLogisticsSqlSPA\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll

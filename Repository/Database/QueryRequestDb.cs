@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using Microsoft.Extensions.Options;
+using Repository.Models;
 using Repository.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,9 +11,13 @@ using System.Text;
 
 namespace Repository.Database
 {
-    class QueryRequestDb
+    public class QueryRequestDb : IQueryRequestDb
     {
-        private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
+        private readonly AppSettings _appSettings;
+        public QueryRequestDb(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
 
         /// <summary>
         /// Gets the database result of the QueryString (Sql in Query) and the values added to the QueryParams
@@ -22,8 +28,10 @@ namespace Repository.Database
         /// The Query brings the Sql-QueryString to know what to search for and which Table
         /// </param>
         /// <returns>A DataTable with the matching result to the parameters value</returns>
-        internal DataTable GetSqlRequestToPage(QueryAndQueryParamsViewModel svm)
+        public DataTable GetSqlRequestToPage(QueryAndQueryParamsViewModel svm)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             DataTable dataTable = new DataTable();
             try
             {
@@ -61,7 +69,7 @@ namespace Repository.Database
         /// The Query brings the Sql-QueryString to know what to search for and which Table
         /// </param>
         /// <returns>A memorystream to be converted to a blob in AngularJs in the wwwroot/app/searchController</returns>
-        internal MemoryStream GetSqlRequestToExcelFile(QueryAndQueryParamsViewModel svm)
+        public MemoryStream GetSqlRequestToExcelFile(QueryAndQueryParamsViewModel svm)
         {
             DataTable dataTable = GetSqlRequestToPage(svm);
 

@@ -6,7 +6,7 @@
     <h3 style="color:red">Kontakta IT</h3>
     <br />
     <div>
-        <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+        <a href="/#/queryList">Tillbaka till listan</a>
     </div>
 </div>
 
@@ -15,7 +15,7 @@
         <h1>Sök</h1>
         <h4>Parametrar</h4>
         <div>
-            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+            <a href="/#/queryList">Tillbaka till listan</a>
         </div>
         <hr />
         <div ng-repeat="i in searchInfo.queryParams track by $index">
@@ -30,12 +30,12 @@
                 <span ng-show="searchForm.dateInput{{$index}}.$touched && searchForm.dateInput{{$index}}.$error.required">Välj ett datum</span>
 
                 <div ng-if="i.typeId==3">
-                        <input ng-model="i.value" type="radio" value="TRUE" ng-required="i.paramOptional == false" /> ja
-                        <input style="margin-left:25px" ng-model="i.value" type="radio" value="FALSE" ng-required="i.paramOptional == false" /> nej
+                    <input ng-model="i.value" type="radio" value="TRUE" ng-required="i.paramOptional == false" /> ja
+                    <input style="margin-left:25px" ng-model="i.value" type="radio" value="FALSE" ng-required="i.paramOptional == false" /> nej
                 </div>
 
                 <select ng-required="i.paramOptional == false" name="tableInput{{$index}}"
-                        ng-model="i.value" class="form-control inputs" ng-if="i.typeId==4" 
+                        ng-model="i.value" class="form-control inputs" ng-if="i.typeId==4"
                         ng-options="option.keyColumn as option.displayColumn for option in i.sqlLists">
                 </select>
                 <span ng-show="searchForm.tableInput{{$index}}.$touched && searchForm.tableInput{{$index}}.$error.required">Välj ett alternativ ifrån listan</span>
@@ -49,7 +49,7 @@
         </div>
         <p style="color:red">{{dateInputMessage}}</p>
         <div ng-if="searchInfo.queryParams.length > 2">
-            <a href="/#/queryList"><p> Tillbaka till listan </p></a>
+            <a href="/#/queryList">Tillbaka till listan</a>
         </div>
         <div>
             <h4 style="color:red">{{noResult}}</h4>
@@ -67,9 +67,9 @@
 
 <div ng-show="searchCompleted == true">
     <h1>Resultat</h1>
-    
-    <div>
-        <a ng-if="searchResult.rowValues.length > 10" href="/#/queryList"><p> Tillbaka till listan</p></a>
+
+    <div ng-if="searchResult.rowValues.length > 10">
+        <a href="/#/queryList">Tillbaka till listan</a>
     </div>
     <br />
     <div ng-if="searchResult.rowValues.length == 0">
@@ -98,13 +98,13 @@
         <div class="form-group">
             <input ng-click="searchQueryExcel()" type="submit" value="Ladda ned som excel" class="btn btn-primary" />
         </div>
-        <br />  
-        <div class="form-group">
-            <input ng-click="searchAgain()" class="btn btn-success" type="button" value="Sök igen" />
-        </div>
+        <br />
+    </div>
+    <div class="form-group">
+        <input ng-click="searchAgain()" ng-show="searchResult.columnNames.length != 0" class="btn btn-success" type="button" value="Sök igen" />
     </div>
     <br />
     <div>
-        <a href="/#/queryList"><p> Tillbaka till listan</p></a>
+        <a href="/#/queryList">Tillbaka till listan</a>
     </div>
 </div>

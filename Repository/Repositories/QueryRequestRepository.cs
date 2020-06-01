@@ -8,18 +8,21 @@ using System.Text;
 
 namespace Repository.Repositories
 {
-    public class QueryRequestRepository
+    public class QueryRequestRepository : IQueryRequestRepository
     {
-        public static DataTable GetSqlRequestToPage(QueryAndQueryParamsViewModel svm)
+        private readonly IQueryRequestDb _queryRequestDb;
+        public QueryRequestRepository(IQueryRequestDb queryRequestDb)
         {
-            QueryRequestDb db = new QueryRequestDb();
-            return db.GetSqlRequestToPage(svm);
+            _queryRequestDb = queryRequestDb;
+        }
+        public DataTable GetSqlRequestToPage(QueryAndQueryParamsViewModel svm)
+        {
+            return _queryRequestDb.GetSqlRequestToPage(svm);
         }
 
-        public static MemoryStream GetSqlRequestToExcelFile(QueryAndQueryParamsViewModel svm)
+        public MemoryStream GetSqlRequestToExcelFile(QueryAndQueryParamsViewModel svm)
         {
-            QueryRequestDb db = new QueryRequestDb();
-            return db.GetSqlRequestToExcelFile(svm);
+            return _queryRequestDb.GetSqlRequestToExcelFile(svm);
         }
 
     }

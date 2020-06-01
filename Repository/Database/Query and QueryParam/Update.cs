@@ -1,4 +1,6 @@
-﻿using Repository.Models;
+﻿using Microsoft.Extensions.Options;
+using Repository.Database.Query_and_QueryParam.Interfaces;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,9 +8,13 @@ using System.Text;
 
 namespace Repository.Database.Query_and_QueryParam
 {
-    class Update
+    public class Update : IUpdate
     {
-        private string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
+        private readonly AppSettings _appSettings;
+        public Update(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
 
         /// <summary>
         /// Updates both the Query and all its associated QueryParams in the database,
@@ -16,8 +22,10 @@ namespace Repository.Database.Query_and_QueryParam
         /// </summary>
         /// <param name="query">all database column values except Id</param>
         /// <param name="queryParams">all database column values except Id</param>
-        internal void UpdateQuery(Query query, List<QueryParam> queryParams)
+        public void UpdateQuery(Query query, List<QueryParam> queryParams)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             string queryParamString = "UPDATE QueryParam SET [Name]=@Name, TypeId=@TypeId, ParameterCode=@ParameterCode," +
                 " TableName=@TableName, ColumnName=@ColumnName, KeyColumn=@KeyColumn, ParamOptional=@ParamOptional WHERE Id=@Id";
             string queryString = "UPDATE Query SET [Name] = @name, [Sql]= @Sql WHERE Id=@Id";

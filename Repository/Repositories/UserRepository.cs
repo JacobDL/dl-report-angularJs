@@ -6,18 +6,21 @@ using System.Text;
 
 namespace Repository.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
-        public static User ValidateUser(AuthenticateModel user)
+        private readonly IUserDb _userDb;
+        public UserRepository(IUserDb userDb)
         {
-            UserDb db = new UserDb();
-            return db.ValidateUser(user);
+            _userDb = userDb;
+        }
+        public User ValidateUser(AuthenticateModel user)
+        {
+            return _userDb.ValidateUser(user);
         }
 
-        public static List<AuthenticateModel> GetAllUsers()
+        public List<AuthenticateModel> GetAllUsers()
         {
-            UserDb db = new UserDb();
-            return db.GetAllUsers();
+            return _userDb.GetAllUsers();
         }
     }
 }

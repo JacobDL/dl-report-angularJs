@@ -1,11 +1,14 @@
 ﻿var myControllers = angular.module('myControllers', []);
 
-myControllers.controller('CreateEditController', ['$scope', '$http', '$routeParams', '$rootScope', '$window',
-    function CreateEditController($scope, $http, $routeParams, $rootScope, $window) {
+myControllers.controller('CreateEditController', ['$scope', '$http', '$routeParams', '$rootScope', '$window','$document',
+    function CreateEditController($scope, $http, $routeParams, $rootScope, $window, $document) {
         
-        window.addEventListener('keydown', keyboardEvents);
+        $document.on('keyup', keyboardEvents);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', keyboardEvents);
+        });
         function keyboardEvents(event) {
-            console.log(event);
             if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
                 $window.location.href = '#/queryList';
             }
@@ -17,7 +20,7 @@ myControllers.controller('CreateEditController', ['$scope', '$http', '$routePara
         //==============================================================================================================================
         //Create Parameter Logic: Checks Role Id, Checks if its Create or Edit Time by the queryId value
         //Adds and removes QueryParams input
-        if ($rootScope.user.roleId == 2) {
+        if ($rootScope.user.roleId != '4') {
             $window.location.href = '#/queryList';
         }
 
@@ -135,16 +138,13 @@ myControllers.controller('CreateEditController', ['$scope', '$http', '$routePara
                 const sqlBox = document.getElementById("text");
                 sqlBox.style.display = "none";
                 isMouseOverModalBox = true;
-                console.log(isMouseOverModalBox)
             }
         }
         $scope.modalBoxEnter = function () {
             isMouseOverModalBox = true;
-            console.log(isMouseOverModalBox)
         }
         $scope.modalBoxLeave = function () {
             isMouseOverModalBox = false;
-            console.log(isMouseOverModalBox)
         }
 
         $scope.close = function () {

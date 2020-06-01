@@ -6,12 +6,16 @@ using System.Text;
 
 namespace Repository.Repositories
 {
-    public class SqlListRepository
+    public class SqlListRepository : ISqlListRepository
     {
-        public static List<SqlTable> GetSqlList(QueryParam queryParams)
+        private readonly ISqlListDb _sqlListDb;
+        public SqlListRepository(ISqlListDb sqlListDb)
         {
-            SqlListDb db = new SqlListDb();
-            return db.GetSqlList(queryParams);
+            _sqlListDb = sqlListDb;
+        }
+        public List<SqlTable> GetSqlList(QueryParam queryParams)
+        {
+            return _sqlListDb.GetSqlList(queryParams);
         }
     }
 }

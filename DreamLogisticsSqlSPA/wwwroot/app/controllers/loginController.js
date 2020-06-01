@@ -1,16 +1,20 @@
-﻿myControllers.controller('LoginController', ['$scope', '$http', '$window',
-    function LoginController($scope, $http, $window) {
-        
-        window.addEventListener('keydown', loginAttemptKey);
-        function loginAttemptKey(event) {
-            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
-                $scope.loginAttempt();
-            }
-        };
+﻿myControllers.controller('LoginController', ['$scope', '$http', '$window', '$document',
+    function LoginController($scope, $http, $window, $document) {
 
         $scope.login = {
             username: '',
             password: ''
+        };
+
+        $document.on('keyup', loginAttemptKey);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', loginAttemptKey);
+        });
+        function loginAttemptKey(event) {
+            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
+                $scope.loginAttempt();
+            }
         };
 
         $scope.loginAttempt = function () {

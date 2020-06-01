@@ -1,4 +1,5 @@
 ﻿using Repository.Database.Query_and_QueryParam;
+using Repository.Database.Query_and_QueryParam.Interfaces;
 using Repository.Models;
 using Repository.ViewModels;
 using System;
@@ -7,58 +8,63 @@ using System.Text;
 
 namespace Repository.Repositories.Query_and_QueryParam
 {
-    public class QueryRepository
+    public class QueryRepository : IQueryRepository
     {
-        public static List<Query> GetQueries()
+        private readonly IDelete _delete;
+        private readonly IInsert _insert;
+        private readonly ISelectQuery _selectQuery;
+        private readonly ISelectQueryParam _selectQueryParam;
+        private readonly IUpdate _update;
+        public QueryRepository(IDelete delete, IInsert insert, ISelectQuery selectQuery, ISelectQueryParam selectQueryParam, IUpdate update)
         {
-            SelectQuery db = new SelectQuery();
-            return db.GetQueries();
-        }
-        public static Query GetQueryById(int id)
-        {
-            SelectQuery db = new SelectQuery();
-            return db.GetQueryById(id);
-        }
-        public static List<QueryParam> GetQueryParamsByQueryId(int id, bool needSqlList)
-        {
-            SelectQueryParam db = new SelectQueryParam();
-            return db.GetQueryParamsById(id, needSqlList);
+            _delete = delete;
+            _insert = insert;
+            _selectQuery = selectQuery;
+            _selectQueryParam = selectQueryParam;
+            _update = update;
         }
 
-        public static List<QueryParam> GetAllQueryParams()
+        public List<Query> GetQueries()
         {
-            SelectQueryParam db = new SelectQueryParam();
-            return db.GetAllQueryParams();
+            return _selectQuery.GetQueries();
+        }
+        public Query GetQueryById(int id)
+        {
+            return _selectQuery.GetQueryById(id);
+        }
+        public List<QueryParam> GetQueryParamsByQueryId(int id, bool needSqlList)
+        {
+            return _selectQueryParam.GetQueryParamsById(id, needSqlList);
         }
 
-        public static void InsertQuery(Query query, List<QueryParam> queryParams)
+        public List<QueryParam> GetAllQueryParams()
         {
-            Insert db = new Insert();
-            db.InsertQuery(query, queryParams);
+            return _selectQueryParam.GetAllQueryParams();
+        }
+
+        public void InsertQuery(Query query, List<QueryParam> queryParams)
+        {
+            _insert.InsertQuery(query, queryParams);
         }
 
         public void DeleteQueryById(int queryId)
         {
-            Delete db = new Delete();
-            db.DeleteQuery(queryId);
+            _delete.DeleteQuery(queryId);
         }
 
-        public static void DeleteQueryParamsById(int paramId)
+        public void DeleteQueryParamsById(int paramId)
         {
-            Delete db = new Delete();
-            db.DeleteQueryParam(paramId);
+            _delete.DeleteQueryParam(paramId);
         }
 
-        public static void InsertQueryParam(List<QueryParam> queryParams, int id)
+        public void InsertQueryParam(List<QueryParam> queryParams, int id)
         {
-            Insert db = new Insert();
-            db.InsertQueryParam(queryParams, id);
+            _insert.InsertQueryParam(queryParams, id);
         }
 
-        public static void UpdateQuery(Query query, List<QueryParam> queryParams)
+        public void UpdateQuery(Query query, List<QueryParam> queryParams)
         {
-            Update db = new Update();
-            db.UpdateQuery(query, queryParams);
+            _update.UpdateQuery(query, queryParams);
         }
     }
 }

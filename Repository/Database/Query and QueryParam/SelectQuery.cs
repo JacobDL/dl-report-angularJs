@@ -1,4 +1,6 @@
-﻿using Repository.Models;
+﻿using Microsoft.Extensions.Options;
+using Repository.Database.Query_and_QueryParam.Interfaces;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,16 +8,22 @@ using System.Text;
 
 namespace Repository.Database.Query_and_QueryParam
 {
-    class SelectQuery
+    public class SelectQuery : ISelectQuery
     {
-        private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
+        private readonly AppSettings _appSettings;
+        public SelectQuery(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
 
         /// <summary>
         /// Gets all the Queries from the database (used in the queryList.html)
         /// </summary>
         /// <returns>A list of Queries</returns>
-        internal List<Query> GetQueries()
+        public List<Query> GetQueries()
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             string queryString = $"SELECT * FROM Query";
             List<Query> queries = new List<Query>();
 
@@ -50,8 +58,10 @@ namespace Repository.Database.Query_and_QueryParam
         /// </summary>
         /// <param name="id">the Id chosen by the user</param>
         /// <returns>All the columns value of the Query</returns>
-        internal Query GetQueryById(int id)
+        public Query GetQueryById(int id)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             string queryString = $"select * from Query where Id=@id";
             Query query = new Query();
 

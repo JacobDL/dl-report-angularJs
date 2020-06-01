@@ -16,13 +16,15 @@ namespace DreamLogisticsSqlSPA
     public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
         private readonly AppSettings _appSettings;
-        public JwtAuthenticationManager(IOptions<AppSettings> appSettings)
+        private readonly IUserRepository _userRepository;
+        public JwtAuthenticationManager(IOptions<AppSettings> appSettings, IUserRepository userRepository)
         {
             _appSettings = appSettings.Value;
-        }
+            _userRepository = userRepository;
+    }
         public string Authenticate(AuthenticateModel user)
         {
-            User validUser = UserRepository.ValidateUser(user);
+            User validUser = _userRepository.ValidateUser(user);
 
             if (validUser.Username == null)
             {

@@ -12,7 +12,6 @@
                 var regex = /\.(.*?)\./g
                 var tokenStringFormated = regex.exec(token);
                 var jsonToken = service.urlBase64Decode(tokenStringFormated[1])
-                console.log(jsonToken)
                 var tokenObject = JSON.parse(jsonToken);
                 return tokenObject;
             }
@@ -68,7 +67,7 @@
 
                 return fileName;
             };
-            
+
             return service;
         }]);
 })();

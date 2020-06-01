@@ -43,7 +43,6 @@ myApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function (
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             
             var token = $window.localStorage.getItem('token')
-            console.log(token);
             if (token === null || typeof token === 'undefined' || token === '') {
                 if (location.hash.indexOf('login') === -1) {
                     $window.location.href = '/#/login';
@@ -69,12 +68,15 @@ myApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function (
 
 var myControllers = angular.module('myControllers', []);
 
-myControllers.controller('CreateEditController', ['$scope', '$http', '$routeParams', '$rootScope', '$window',
-    function CreateEditController($scope, $http, $routeParams, $rootScope, $window) {
+myControllers.controller('CreateEditController', ['$scope', '$http', '$routeParams', '$rootScope', '$window','$document',
+    function CreateEditController($scope, $http, $routeParams, $rootScope, $window, $document) {
         
-        window.addEventListener('keydown', keyboardEvents);
+        $document.on('keyup', keyboardEvents);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', keyboardEvents);
+        });
         function keyboardEvents(event) {
-            console.log(event);
             if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
                 $window.location.href = '#/queryList';
             }
@@ -86,7 +88,7 @@ myControllers.controller('CreateEditController', ['$scope', '$http', '$routePara
         //==============================================================================================================================
         //Create Parameter Logic: Checks Role Id, Checks if its Create or Edit Time by the queryId value
         //Adds and removes QueryParams input
-        if ($rootScope.user.roleId == 2) {
+        if ($rootScope.user.roleId != '4') {
             $window.location.href = '#/queryList';
         }
 
@@ -204,16 +206,13 @@ myControllers.controller('CreateEditController', ['$scope', '$http', '$routePara
                 const sqlBox = document.getElementById("text");
                 sqlBox.style.display = "none";
                 isMouseOverModalBox = true;
-                console.log(isMouseOverModalBox)
             }
         }
         $scope.modalBoxEnter = function () {
             isMouseOverModalBox = true;
-            console.log(isMouseOverModalBox)
         }
         $scope.modalBoxLeave = function () {
             isMouseOverModalBox = false;
-            console.log(isMouseOverModalBox)
         }
 
         $scope.close = function () {
@@ -284,19 +283,23 @@ myControllers.controller('LayOutController', ['$scope', '$http', '$window', '$ro
         }
 
     }]);
-myControllers.controller('LoginController', ['$scope', '$http', '$window',
-    function LoginController($scope, $http, $window) {
-        
-        window.addEventListener('keydown', loginAttemptKey);
-        function loginAttemptKey(event) {
-            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
-                $scope.loginAttempt();
-            }
-        };
+myControllers.controller('LoginController', ['$scope', '$http', '$window', '$document',
+    function LoginController($scope, $http, $window, $document) {
 
         $scope.login = {
             username: '',
             password: ''
+        };
+
+        $document.on('keyup', loginAttemptKey);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', loginAttemptKey);
+        });
+        function loginAttemptKey(event) {
+            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
+                $scope.loginAttempt();
+            }
         };
 
         $scope.loginAttempt = function () {
@@ -338,7 +341,7 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
 
         $scope.isAdmin = true;
 
-        if ($rootScope.user.roleId === "1") {
+        if ($rootScope.user.roleId === '4') {
             $scope.isAdmin = false;
             $http.get("https://localhost:44313/api/query/QueryParams")
                 .then(function (response) {
@@ -375,7 +378,6 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
         $scope.delete = function (index) {
 
             const options = document.getElementById("delete-option-" + index);
-            console.log(options.style.display);
             if (options.style.display == "table-row") {
                 options.style.display = "none"
             }
@@ -386,7 +388,6 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
         };
 
         $scope.closeAll = function (id) {
-            console.log(id);
             const deleteOptions = document.getElementById("delete-option-" + id);
             const deatailsOptions = document.getElementById("details-option-" + id);
 
@@ -422,35 +423,39 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
         }
 
     }]);
-myControllers.controller('SearchController', ['$scope', '$http', '$routeParams', 'utilitiesService', '$window',
-    function SearchController($scope, $http, $routeParams, utilitiesService, $window) {
+myControllers.controller('SearchController', ['$scope', '$http', '$routeParams', 'utilitiesService', '$window', '$document',
+    function SearchController($scope, $http, $routeParams, utilitiesService, $window, $document) {
 
         $scope.searchCompleted = false;
         $scope.invalidQueryParam = false;
 
-        window.addEventListener('keydown', keyboardEvents);
-        function keyboardEvents(event) {
-            if (event.keyCode == 13 || event.which == 13 || event.key == "Enter") {
 
-                if ($scope.searchCompleted == true) {
-                    $scope.searchQueryExcel();
-                }
-                else {
-                    $scope.searchQuery();
-                }
-            }
-            else if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
+        $document.on('keyup', keyboardEvents);
+
+        $scope.$on('$destroy', function () {
+            $document.off('keyup', keyboardEvents);
+        });
+        function keyboardEvents(event) {
+            if (event.keyCode == 27 || event.which == 27 || event.key == "Escape") {
                 $window.location.href = '#/queryList';
             }
         };
 
         $http.get("https://localhost:44313/api/query/List/" + $routeParams.queryId)
             .then(function (response) {
-                console.log(response.data.queryParams)
                 for (var param of response.data.queryParams) {
-                    console.log(param);
-                    if (param.typeId == 4 && param.sqlLists.length == 0) {
-                        $scope.invalidQueryParam = true;
+                    if (param.typeId == 4) {
+                        if (param.sqlLists.length == 0) {
+
+                            $scope.invalidQueryParam = true;
+                        }
+                        else {
+                            console.log(param.sqlLists);
+                            param.sqlLists.unshift({
+                                displayColumn: '(ej satt)',
+                                keyColumn: null
+                            });
+                        }
                     }
 
                 }
@@ -496,15 +501,14 @@ myControllers.controller('SearchController', ['$scope', '$http', '$routeParams',
                     console.log(error);
                 });
             }
+
         };
-        //resonse.columnNames.length
         //button for showing the result on the html page
         $scope.searchQuery = function () {
 
             var getObject = getPayloadValues();
 
             if (getObject.valid) {
-
                 $http.post("https://localhost:44313/api/Search",
                     getObject.payload
                 ).then(function (response) {
@@ -554,7 +558,7 @@ myControllers.controller('SearchController', ['$scope', '$http', '$routeParams',
                     payload.Parameters.push({ Id: param.id, Value: param.value.toString() });
                 }
                 else {
-                    payload.Parameters.push({ Id: param.id, Value: 'null' });
+                    payload.Parameters.push({ Id: param.id, Value: null });
                 }
 
             });
@@ -580,7 +584,6 @@ myControllers.controller('SearchController', ['$scope', '$http', '$routeParams',
                 var regex = /\.(.*?)\./g
                 var tokenStringFormated = regex.exec(token);
                 var jsonToken = service.urlBase64Decode(tokenStringFormated[1])
-                console.log(jsonToken)
                 var tokenObject = JSON.parse(jsonToken);
                 return tokenObject;
             }
@@ -636,7 +639,7 @@ myControllers.controller('SearchController', ['$scope', '$http', '$routeParams',
 
                 return fileName;
             };
-            
+
             return service;
         }]);
 })();

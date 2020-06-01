@@ -25,7 +25,7 @@
 
         .logged-in-user {
             margin-right: 2em;
-            width: 50%;
+            width: 75%;
             justify-content: right;
             text-align: right;
         }
@@ -46,8 +46,8 @@
                     </a>
                 </div>
                 <div class="logged-in-user">
-                    <h4 ng-show="user.name.length > 0 && user.roleId == 2"><i class="fas fa-user user-logo"></i> {{user.name}} (användare)</h4>
-                    <h4 ng-show="user.name.length > 0 && user.roleId == 1"><i class="fas fa-user-tie user-logo"></i> {{user.name}} (admin)</h4>
+                    <h4 ng-show="user.name.length > 0 && user.roleId != 4"><i class="fas fa-user user-logo"></i> {{user.name}} (User)</h4>
+                    <h4 ng-show="user.name.length > 0 && user.roleId == 4"><i class="fas fa-user-tie user-logo"></i> {{user.name}} (IT)</h4>
                 </div>
                 
                 <i id="log-out" ng-click="logOut()" class="fas fa-sign-out-alt"></i>

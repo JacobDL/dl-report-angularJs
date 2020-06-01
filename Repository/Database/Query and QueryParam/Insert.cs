@@ -1,4 +1,6 @@
-﻿using Repository.Models;
+﻿using Microsoft.Extensions.Options;
+using Repository.Database.Query_and_QueryParam.Interfaces;
+using Repository.Models;
 using Repository.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,18 +9,23 @@ using System.Text;
 
 namespace Repository.Database.Query_and_QueryParam
 {
-    class Insert
+    public class Insert : IInsert
     {
-        private readonly string connectionString = "Data Source=localhost;Initial Catalog=DreamLogisticsReport;Integrated Security=True";
-
+        private readonly AppSettings _appSettings;
+        public Insert(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
         /// <summary>
         /// Create the Query with the parameters added by the user (IT-role needed) and 
         /// then calls the "InsertQueryParam"-function to create the associated QueryParams
         /// </summary>
         /// <param name="query">GroupName and Sql properties added by the user</param>
         /// <param name="queryParams">Properties that is in the database except Id, added by the user</param>
-        internal void InsertQuery(Query query, List<QueryParam> queryParams)
+        public void InsertQuery(Query query, List<QueryParam> queryParams)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+            
             var queryId = 0;
             string queryString = $"INSERT INTO [Query] ([Name], [Sql]) " +
                     $"VALUES (@name, @sql); SELECT CONVERT(int, SCOPE_IDENTITY());";
@@ -42,6 +49,8 @@ namespace Repository.Database.Query_and_QueryParam
         /// <param name="queryId">Id of the associated Query for foreign key reference</param>
         public void InsertQueryParam(List<QueryParam> queryParams, int queryId)
         {
+            string connectionString = _appSettings.AdministratorConnectionString;
+
             string queryString = $"INSERT INTO QueryParam (QueryId, [Name], TypeId, ParameterCode, TableName, ColumnName, KeyColumn, ParamOptional) " +
                    $"VALUES (@QueryId, @Name, @TypeId, @ParameterCode, @TableName, @ColumnName, @KeyColumn, @ParamOptional);";
 
