@@ -22,7 +22,7 @@ namespace Repository.Database.Query_and_QueryParam
         /// <returns>A list of Queries</returns>
         public List<Query> GetQueries()
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             string queryString = $"SELECT * FROM Query";
             List<Query> queries = new List<Query>();
@@ -60,7 +60,7 @@ namespace Repository.Database.Query_and_QueryParam
         /// <returns>All the columns value of the Query</returns>
         public Query GetQueryById(int id)
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             string queryString = $"select * from Query where Id=@id";
             Query query = new Query();

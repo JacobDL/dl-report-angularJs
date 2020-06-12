@@ -22,7 +22,7 @@ namespace Repository.Database
         /// <returns>a list of SqlTable (the two columns of the entire TableName table)</returns>
         public List<SqlTable> GetSqlList(QueryParam queryParam)
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             List<SqlTable> tableList = new List<SqlTable>();
 

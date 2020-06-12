@@ -6374,23 +6374,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\danie\\.nuget\\packages\\": {},
+    "C:\\Users\\melfas\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
+      "projectUniqueName": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj",
       "projectName": "Repository",
-      "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
-      "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\obj\\",
+      "projectPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj",
+      "packagesPath": "C:\\Users\\melfas\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\melfas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

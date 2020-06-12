@@ -22,7 +22,7 @@ namespace Repository.Database
         /// <returns>a user with all the values in the class added</returns>
         public User ValidateUser(AuthenticateModel user)
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             string queryString = $"select * from Administrators where Username = @Username and Password = @Password";
             User validUser = new User();
@@ -61,7 +61,7 @@ namespace Repository.Database
         /// <returns>a list of "AuthenticateModel"</returns>
         public List<AuthenticateModel> GetAllUsers()
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             string queryString = $"select * from Administrators";
 

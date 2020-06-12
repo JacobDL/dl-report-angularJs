@@ -52,6 +52,7 @@ namespace Repository.Database.Query_and_QueryParam
                         {
                             cmd.Parameters.AddWithValue("@TableName", DBNull.Value);
                             cmd.Parameters.AddWithValue("@ColumnName", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@KeyColumn", DBNull.Value);
                         }
 
                         cmd.ExecuteNonQuery();

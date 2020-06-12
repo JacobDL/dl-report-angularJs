@@ -27,7 +27,7 @@ namespace Repository.Database.Query_and_QueryParam
         /// <returns>a list of QueryParams</returns>
         public List<QueryParam> GetQueryParamsById(int id, bool needSqlList)
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             List<QueryParam> queryParams = new List<QueryParam>();
 
@@ -73,7 +73,7 @@ namespace Repository.Database.Query_and_QueryParam
         /// <returns>A list of all the QueryParams</returns>
         public List<QueryParam> GetAllQueryParams()
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             List<QueryParam> queryParams = new List<QueryParam>();
 

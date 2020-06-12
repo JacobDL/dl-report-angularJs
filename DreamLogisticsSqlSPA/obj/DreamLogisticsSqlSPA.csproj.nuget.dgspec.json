@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {}
+    "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {
+    "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
+        "projectUniqueName": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
         "projectName": "DreamLogisticsSqlSPA",
-        "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\DreamLogisticsSqlSPA\\obj\\",
+        "projectPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\DreamLogisticsSqlSPA\\DreamLogisticsSqlSPA.csproj",
+        "packagesPath": "C:\\Users\\melfas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\DreamLogisticsSqlSPA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\melfas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj": {
-                "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj"
+              "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj": {
+                "projectPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj"
               }
             }
           }
@@ -92,20 +92,20 @@
         }
       }
     },
-    "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj": {
+    "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
+        "projectUniqueName": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danie\\source\\repos\\dl-report-angularJs\\Repository\\obj\\",
+        "projectPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\melfas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\melfas\\Documents\\GitHub\\dl-report-angularJs\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\melfas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -30,7 +30,7 @@ namespace Repository.Database
         /// <returns>A DataTable with the matching result to the parameters value</returns>
         public DataTable GetSqlRequestToPage(QueryAndQueryParamsViewModel svm)
         {
-            string connectionString = _appSettings.AdministratorConnectionString;
+            string connectionString = _appSettings.UserConnectionString;
 
             DataTable dataTable = new DataTable();
             try
