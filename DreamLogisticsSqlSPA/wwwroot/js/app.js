@@ -339,10 +339,10 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
             }
         };
 
-        $scope.isAdmin = true;
+        $scope.isAdmin = false;
 
         if ($rootScope.user.roleId === '4') {
-            $scope.isAdmin = false;
+            $scope.isAdmin = true;
             $http.get("https://localhost:44313/api/query/QueryParams")
                 .then(function (response) {
                     $scope.query = response.data;
@@ -361,7 +361,7 @@ myControllers.controller('QueryListController', ['$scope', '$http', '$window', '
 
        //==============================================================================================================================
         //==============================================================================================================================
-        //This section is for IT-role only, check details and delete Query/QueryParams (IT-role = 1)
+        //This section is for IT-role only, check details and delete Query/QueryParams (IT-role = 4)
 
         $scope.details = function (id) {
 
